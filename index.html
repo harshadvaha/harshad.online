@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Harshad Vaghasiya</title>
+  <meta name="description" content="Harshad Vaghasiya: Revenue Growth Management and pricing analytics by day. Interfaces, brand identities and small web apps after hours.">
+  <meta name="theme-color" content="#ECE9E1">
+  <meta property="og:title" content="Harshad Vaghasiya">
+  <meta property="og:description" content="Pricing & Revenue Growth Management by day. Things I design and build after hours.">
+  <meta property="og:image" content="https://harshad.online/assets/img/og.jpg">
+  <meta property="og:url" content="https://harshad.online/">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="assets/fonts/gloock-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/landing.css">
+</head>
+<!--
+  LANDING PAGE ("/")
+  One idea: "9 to 5" and "5 to 9" use the same two digits.
+  Move the pointer left or right and the sky turns from day to night,
+  while the 9 and the 5 swap places. Each half leads to one side of the site.
+  Behaviour: assets/js/landing.js · Styles: assets/css/landing.css
+-->
+<body class="landing day">
+  <h1 class="sr-only">Harshad Vaghasiya. Revenue Growth Management and pricing analytics by day; interfaces, brand identities and small web apps after hours.</h1>
+
+  <div class="sky" aria-hidden="true">
+    <div class="glow"></div>
+    <div class="sun"></div>
+    <div class="moon"></div>
+    <div class="water"><div class="sun-reflect"></div></div>
+    <div class="horizon"></div>
+  </div>
+
+  <header class="lbar">
+    <a class="who" href="./">
+      <span class="name">Harshad Vaghasiya</span>
+      <span class="mono sub">Gujarat, India</span>
+    </a>
+    <div class="clock mono" aria-label="Local time in India"><span class="pulse"></span><span id="ist">--:--</span> IST</div>
+  </header>
+
+  <main class="stage" aria-hidden="true">
+    <div class="digits">
+      <span class="dg a">9</span>
+      <span class="to">to</span>
+      <span class="dg b">5</span>
+    </div>
+    <div class="digits mirror">
+      <span class="dg a">9</span>
+      <span class="to">to</span>
+      <span class="dg b">5</span>
+    </div>
+  </main>
+
+  <nav class="doors" aria-label="Choose a side">
+    <a class="door day-door" href="work/" data-go="day" data-side="0">
+      <span class="mono when">09:00 – 17:00</span>
+      <span class="title display">The day job</span>
+      <span class="what">Pricing &amp; Revenue Growth Management for global FMCG brands, 4+ years at NielsenIQ.</span>
+      <span class="go mono">Open résumé <i data-icon="arrow"></i></span>
+    </a>
+    <div class="hint mono" aria-hidden="true"><span>Day</span><i></i><span>Night</span></div>
+    <a class="door night-door" href="after-hours/" data-go="night" data-side="1">
+      <span class="mono when">17:00 – 21:00</span>
+      <span class="title display">After hours</span>
+      <span class="what">Interfaces, brand identities and small web apps I make out of curiosity.</span>
+      <span class="go mono">See projects <i data-icon="arrow"></i></span>
+    </a>
+  </nav>
+
+  <div class="grain" aria-hidden="true"></div>
+  <script src="assets/js/core.js"></script>
+  <script src="assets/js/landing.js"></script>
+</body>
+</html>
