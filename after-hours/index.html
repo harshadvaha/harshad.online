@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>After hours · Harshad Vaghasiya</title>
+  <meta name="description" content="Interfaces, brand identities and small web apps Harshad Vaghasiya designs and builds after the day job.">
+  <meta name="theme-color" content="#0D0C11">
+  <meta property="og:title" content="After hours · Harshad Vaghasiya">
+  <meta property="og:description" content="Interfaces, brand identities and small web apps, made out of curiosity.">
+  <meta property="og:image" content="https://harshad.online/assets/img/og-night.jpg">
+  <link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="../assets/fonts/gloock-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../assets/css/base.css">
+  <link rel="stylesheet" href="../assets/css/after.css">
+</head>
+<!--
+  "5 TO 9" — PROJECTS (/after-hours/)
+  Tiles come from /content/projects.js (order, text, tile size, colours).
+  Grid logic + filter + hover video: /assets/js/after.js
+  Styles: /assets/css/after.css
+-->
+<body class="night after">
+  <header class="topbar">
+    <a class="home" href="../" data-go="day" aria-label="Back to start"><span class="dot moon"></span>Harshad Vaghasiya</a>
+    <div class="actions">
+      <a class="btn line icon" href="https://github.com/harshadvaha" target="_blank" rel="noopener" aria-label="GitHub"><span data-icon="github"></span></a>
+      <a class="btn line icon" href="https://www.behance.net/harshadvaghasiya" target="_blank" rel="noopener" aria-label="Behance"><span data-icon="behance"></span></a>
+      <a class="btn solid" href="https://www.linkedin.com/in/harshadvaha" target="_blank" rel="noopener"><span data-icon="linkedin"></span>Connect</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="ah-hero wrap">
+      <div class="ah-copy">
+        <p class="mono eyebrow rv"><span class="tick"></span>17:00 → 21:00 · After hours</p>
+        <h1 class="display ah-title lines">Things I make after the day job.</h1>
+        <p class="ah-sub rv" style="--d:.35s">Interfaces, brand identities and small web apps. Some are live, some are concepts, and a few answer open design briefs. Each one started with a question I wanted to work through properly.</p>
+      </div>
+      <figure class="night-dial rv" style="--d:.2s" aria-label="Current time in India">
+        <svg viewBox="0 0 200 200" id="night-dial" aria-hidden="true"></svg>
+        <figcaption class="mono" id="night-cap">--</figcaption>
+      </figure>
+    </section>
+
+    <nav class="filters wrap rv" aria-label="Filter projects" id="filters"></nav>
+
+    <section class="grid wrap" id="grid" aria-live="polite"></section>
+
+    <section class="hello wrap">
+      <p class="mono rv">21:00 · Lights out</p>
+      <h2 class="display lines">Say hello.</h2>
+      <div class="hello-row rv">
+        <a class="btn solid big" href="https://www.linkedin.com/in/harshadvaha" target="_blank" rel="noopener"><span data-icon="linkedin"></span>Connect on LinkedIn</a>
+        <a class="btn line big" href="https://github.com/harshadvaha" target="_blank" rel="noopener"><span data-icon="github"></span>GitHub</a>
+        <a class="btn line big" href="https://www.behance.net/harshadvaghasiya" target="_blank" rel="noopener"><span data-icon="behance"></span>Behance</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot wrap">
+    <a class="mono back-day" href="../work/" data-go="day"><i data-icon="back"></i> The day job: résumé</a>
+    <span class="mono">© <span id="yr"></span> Harshad Vaghasiya</span>
+  </footer>
+
+  <div class="cursor" id="cursor" aria-hidden="true"><span>View</span></div>
+  <div class="grain" aria-hidden="true"></div>
+  <script src="../content/projects.js"></script>
+  <script src="../assets/js/core.js"></script>
+  <script src="../assets/js/after.js"></script>
+</body>
+</html>

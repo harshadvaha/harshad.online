@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Project · Harshad Vaghasiya</title>
+  <meta name="description" content="A project by Harshad Vaghasiya.">
+  <meta name="theme-color" content="#0D0C11">
+  <link rel="icon" href="../../assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="../../assets/fonts/gloock-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../../assets/css/base.css">
+  <link rel="stylesheet" href="../../assets/css/project.css">
+</head>
+<!--
+  PROJECT PAGE (/after-hours/project/?p=<id>)
+  One template for every project. Content: /content/projects.js
+  Rendering: /assets/js/project.js · Styles: /assets/css/project.css
+-->
+<body class="night project">
+  <header class="topbar">
+    <a class="home" href="../" aria-label="All projects"><i class="back" data-icon="back"></i>All projects</a>
+    <div class="actions">
+      <a class="btn solid" href="https://www.linkedin.com/in/harshadvaha" target="_blank" rel="noopener"><span data-icon="linkedin"></span>Connect</a>
+    </div>
+  </header>
+
+  <main id="main"></main>
+
+  <footer class="foot wrap">
+    <a class="mono back-day" href="../"><i data-icon="back"></i> All projects</a>
+    <span class="mono">© <span id="yr"></span> Harshad Vaghasiya</span>
+  </footer>
+
+  <div class="lightbox" id="lightbox" hidden><img alt=""><button class="mono close" type="button">Close</button></div>
+  <div class="grain" aria-hidden="true"></div>
+  <script src="../../content/projects.js"></script>
+  <script src="../../assets/js/core.js"></script>
+  <script src="../../assets/js/project.js"></script>
+</body>
+</html>
