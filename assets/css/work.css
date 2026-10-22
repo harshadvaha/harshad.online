@@ -10,7 +10,7 @@ body.work main { padding-top: 120px; }
 .eyebrow .tick { width: 22px; height: 1px; background: var(--sun); }
 .name { font-size: clamp(54px, 9.4vw, 150px); line-height: .9; letter-spacing: -.025em; margin-left: -.04em; }
 .hero-grid { display: grid; grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr); gap: clamp(28px, 6vw, 96px); align-items: end; margin-top: clamp(28px, 4vw, 52px); }
-.intro { font-size: clamp(26px, 3.1vw, 46px); line-height: 1.1; letter-spacing: -.012em; max-width: 19ch; }
+.intro { font-size: clamp(26px, 3.4vw, 54px); line-height: 1.1; letter-spacing: -.012em; max-width: 30ch; }
 .meta { display: grid; gap: 0; border-top: 1px solid var(--day-line); }
 .meta div { display: grid; grid-template-columns: 92px 1fr; gap: 12px; padding: 13px 0; border-bottom: 1px solid var(--day-line); font-size: 15px; }
 .meta dt { color: var(--day-ink-3); font-family: var(--f-mono); font-size: 11px; text-transform: uppercase; letter-spacing: .04em; padding-top: 3px; }

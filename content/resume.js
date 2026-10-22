@@ -14,7 +14,7 @@ window.RESUME = {
   pdf: "../assets/files/Harshad-Vaghasiya-Resume.pdf",
 
   // Opening statement (large type). Keep it to one or two sentences.
-  intro: "I help FMCG brands decide what to charge, when to promote, and what to stop doing.",
+  intro: "I help FMCG brands set the right price, time their promotions, and drop what doesn’t pay back.",
 
   summary:
     "Revenue Growth Management consultant with 4+ years at NielsenIQ in FMCG pricing strategy, promotion optimization, Price Pack Architecture, trade investment and mix management, within 7+ years of total experience. I advise global FMCG clients across Asia, the Middle East and Eastern Europe, turning price elasticity, sales decomposition and simulation outputs into clear pricing and promotion decisions that protect margin and grow share. I bring AI tools into everyday analysis so recurring work runs faster and with fewer errors.",
