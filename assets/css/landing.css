@@ -13,8 +13,8 @@ body.landing {
 /* ---------- Sky ---------- */
 .sky { position: fixed; inset: 0; background: linear-gradient(180deg, var(--top) 0%, var(--hz) var(--hzY), var(--water) var(--hzY), var(--water) 100%); }
 .sky .glow { position: absolute; left: 0; right: 0; top: calc(var(--hzY) - 40svh); height: 40svh; background: radial-gradient(60% 100% at var(--sx, 30%) 100%, color-mix(in srgb, var(--sun) calc(var(--glow, 0) * 60%), transparent), transparent 70%); pointer-events: none; }
-.sky .sun { position: absolute; width: calc(var(--ds) * .52); aspect-ratio: 1; border-radius: 50%; background: radial-gradient(circle at 38% 34%, #FFD877, var(--sun) 58%, #C27606 100%); left: var(--sx, 30%); top: var(--sy, 20svh); translate: -50% -50%; box-shadow: 0 0 calc(var(--ds) * .4) color-mix(in srgb, var(--sun) 35%, transparent); }
-.sky .moon { position: absolute; width: calc(var(--ds) * .22); aspect-ratio: 1; border-radius: 50%; left: var(--mx, 84%); top: var(--my, 70svh); translate: -50% -50%; opacity: var(--mo, 0); background: var(--moon); -webkit-mask: radial-gradient(circle at 68% 34%, transparent 46%, #000 47%); mask: radial-gradient(circle at 68% 34%, transparent 46%, #000 47%); filter: drop-shadow(0 0 22px rgba(201,194,255,.45)); }
+.sky .sun { position: absolute; width: calc(var(--ds) * .52); aspect-ratio: 1; border-radius: 50%; background: radial-gradient(circle at 38% 34%, #FFD877, var(--sun) 58%, #C27606 100%); left: var(--sx, 30%); top: calc(var(--hzY) * var(--syk, .36)); translate: -50% -50%; box-shadow: 0 0 calc(var(--ds) * .4) color-mix(in srgb, var(--sun) 35%, transparent); }
+.sky .moon { position: absolute; width: calc(var(--ds) * .22); aspect-ratio: 1; border-radius: 50%; left: var(--mx, 84%); top: calc(var(--hzY) * var(--myk, 1.02)); translate: -50% -50%; opacity: var(--mo, 0); background: var(--moon); -webkit-mask: radial-gradient(circle at 68% 34%, transparent 46%, #000 47%); mask: radial-gradient(circle at 68% 34%, transparent 46%, #000 47%); filter: drop-shadow(0 0 22px rgba(201,194,255,.45)); }
 .sky .water { position: absolute; left: 0; right: 0; top: var(--hzY); bottom: 0; overflow: hidden; background: var(--water); }
 .sky .sun-reflect { position: absolute; left: var(--sx, 30%); top: 0; width: calc(var(--ds) * .5); height: 70%; translate: -50% 0; background: repeating-linear-gradient(180deg, color-mix(in srgb, var(--sun) 70%, transparent) 0 3px, transparent 3px 9px); -webkit-mask: linear-gradient(180deg, #000, transparent 80%); mask: linear-gradient(180deg, #000, transparent 80%); opacity: var(--ro, .35); filter: blur(.6px); }
 .sky .horizon { position: absolute; left: 0; right: 0; top: var(--hzY); height: 1px; background: var(--line); transform-origin: 50% 50%; animation: draw 1.6s .2s var(--ease-io) both; }
@@ -67,6 +67,7 @@ body.landing[data-side="0"] .night-door, body.landing[data-side="1"] .day-door {
 /* ---------- Small screens ---------- */
 @media (max-width: 760px) {
   body.landing { --hzY: 46svh; --ds: min(52vw, 30svh); }
+  .sky .sun { width: calc(var(--ds) * .3); }
   .doors { grid-template-columns: 1fr; gap: 0; padding-bottom: max(18px, env(safe-area-inset-bottom)); }
   .hint { display: none; }
   .sky .sun-reflect { height: 32%; }

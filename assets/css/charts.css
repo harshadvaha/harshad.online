@@ -7,13 +7,16 @@
 .ch-v { font-size: 13.5px; font-weight: 600; text-align: right; white-space: nowrap; }
 .ch-v em { font-style: normal; font-weight: 400; color: var(--c-mute); margin-left: 8px; font-size: 12px; }
 
-/* waterfall */
-.ch-wf .ch-row { display: grid; grid-template-columns: minmax(120px, 1.1fr) minmax(0, 2fr) 118px; gap: 14px; align-items: center; padding: 7px 0; border-bottom: 1px solid var(--c-line); }
-.ch-wf .ch-track { position: relative; height: 18px; background: var(--c-track); border-radius: 3px; }
-.ch-wf .ch-track i { position: absolute; top: 0; bottom: 0; border-radius: 3px; background: var(--c-tot); transform-origin: left; }
-.ch-wf .leak .ch-track i { background: var(--c-leak); }
-.ch-wf .gain .ch-track i { background: var(--c-gain); }
-.ch-wf .tot .ch-l { font-weight: 600; }
+/* waterfall (diverging) */
+.ch-wf .ch-row { display: grid; grid-template-columns: minmax(120px, 1.1fr) minmax(0, 2fr) 118px; gap: 14px; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--c-line); }
+.ch-wf .ch-row.tot { grid-template-columns: minmax(0, 1fr) auto; padding: 11px 0; border-bottom: 1.5px solid var(--c-ink); }
+.ch-wf .ch-row.tot .ch-l, .ch-wf .ch-row.tot .ch-v { font-weight: 650; font-size: 14.5px; }
+.ch-wf .ch-row.tot + .ch-row { border-top: 0; }
+.ch-wf .ch-track { position: relative; height: 16px; }
+.ch-wf .ch-track::before { content: ""; position: absolute; left: var(--z); top: -9px; bottom: -9px; width: 1px; background: var(--c-ink); opacity: .55; }
+.ch-wf .ch-track i { position: absolute; top: 0; bottom: 0; border-radius: 3px; }
+.ch-wf .ch-track i.l { background: var(--c-leak); transform-origin: right; border-radius: 3px 0 0 3px; }
+.ch-wf .ch-track i.r { background: var(--c-gain); transform-origin: left; border-radius: 0 3px 3px 0; }
 .ch-wf .leak .ch-v { color: var(--c-leak); }
 .ch-wf .gain .ch-v { color: var(--c-gain); }
 
@@ -64,9 +67,8 @@
 @media (prefers-reduced-motion: reduce) { .grow .ch i, .grow .ch-seg i { transform: none !important; transition: none; } }
 
 @media (max-width: 640px) {
-  .ch-wf .ch-row { grid-template-columns: minmax(0, 1fr) 96px; row-gap: 6px; }
+  .ch-wf .ch-row { grid-template-columns: minmax(0, 1fr) auto; row-gap: 7px; }
   .ch-wf .ch-track { grid-column: 1 / -1; grid-row: 2; height: 12px; }
-  .ch-v em { display: none; }
   .ch-pair .ch-g { grid-template-columns: 1fr; }
   .ch-pair .ch-g .ch-l { grid-row: auto; }
   .ch-stack .ch-strip { grid-template-columns: 1fr; gap: 6px; }

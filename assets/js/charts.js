@@ -6,23 +6,19 @@
   const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
   const gbp = (v, d = 2) => (v < 0 ? '−' : '') + '£' + (Math.abs(v) >= 1e6 ? (Math.abs(v) / 1e6).toFixed(d) + 'M' : Math.round(Math.abs(v) / 1e3).toLocaleString('en-GB') + 'k');
 
-  // Horizontal waterfall: one row per step; totals are full bars, steps float.
+  // Waterfall as diverging bars: totals are plain rows; each step grows left (loss)
+  // or right (gain) from a zero line, on a scale fitted to the steps themselves.
   function waterfall(el, steps, o = {}) {
-    let run = 0, lo = 0, hi = 0;
-    const rows = steps.map(s => {
-      let a, b;
-      if (s.type === 'total') { a = 0; b = s.value; run = s.value; }
-      else { a = run; b = run + s.value; run = b; }
-      lo = Math.min(lo, a, b); hi = Math.max(hi, a, b);
-      return { ...s, a, b };
-    });
-    const span = hi - lo || 1, x = v => ((v - lo) / span) * 100;
+    const mv = steps.filter(s => s.type !== 'total');
+    const neg = Math.max(0, ...mv.map(s => -s.value)), pos = Math.max(0, ...mv.map(s => s.value));
+    const span = (neg + pos) || 1, z = neg / span * 100;
+    const pp = r => o.pct && r.pct != null ? `<em>${r.type === 'total' ? Math.round(r.pct) + 'p' : (r.pct > 0 ? '+' : '−') + Math.abs(r.pct).toFixed(1) + 'p'}</em>` : '';
     el.classList.add('ch', 'ch-wf');
-    el.innerHTML = rows.map((r, i) => {
-      const l = x(Math.min(r.a, r.b)), w = Math.max(.6, Math.abs(x(r.b) - x(r.a)));
-      const cls = r.type === 'total' ? 'tot' : (r.value >= 0 ? 'gain' : 'leak');
-      const val = r.type === 'total' ? gbp(r.value) : (r.value >= 0 ? '+' : '') + gbp(r.value).replace('−', '−');
-      return `<div class="ch-row ${cls}" style="--i:${i}"><span class="ch-l">${esc(r.label)}</span><span class="ch-track"><i style="left:${l}%;width:${w}%"></i></span><span class="ch-v">${val}${o.pct && r.pct != null ? `<em>${r.type === 'total' ? Math.round(r.pct) + 'p' : (r.pct > 0 ? '+' : '−') + Math.abs(r.pct).toFixed(1) + 'p'}</em>` : ''}</span></div>`;
+    el.style.setProperty('--z', z + '%');
+    el.innerHTML = steps.map((r, i) => {
+      if (r.type === 'total') return `<div class="ch-row tot" style="--i:${i}"><span class="ch-l">${esc(r.label)}</span><span class="ch-v">${gbp(r.value)}${pp(r)}</span></div>`;
+      const w = Math.max(.8, Math.abs(r.value) / span * 100), up = r.value >= 0;
+      return `<div class="ch-row ${up ? 'gain' : 'leak'}" style="--i:${i}"><span class="ch-l">${esc(r.label)}</span><span class="ch-track"><i class="${up ? 'r' : 'l'}" style="${up ? `left:${z}%` : `right:${100 - z}%`};width:${w}%"></i></span><span class="ch-v">${up ? '+' : ''}${gbp(r.value)}${pp(r)}</span></div>`;
     }).join('');
   }
 

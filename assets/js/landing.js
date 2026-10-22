@@ -48,14 +48,14 @@
     // Sun: travels left → right and sets below the horizon
     const e = eio(t);
     root.setProperty('--sx', (24 + 52 * e).toFixed(2) + '%');
-    const sy = hz * (.36 + .86 * Math.pow(t, 1.25));
-    root.setProperty('--sy', sy.toFixed(1) + 'px');
+    // Heights are fractions of the horizon line, resolved in CSS (robust to in-app browsers misreporting innerHeight)
+    root.setProperty('--syk', (.36 + .86 * Math.pow(t, 1.25)).toFixed(4));
     root.setProperty('--glow', Math.pow(Math.sin(Math.PI * clamp(t * 1.1)), 1.4).toFixed(3));
     root.setProperty('--ro', (t < .62 ? .28 + .5 * Math.sin(Math.PI * t) : Math.max(0, .78 - (t - .62) * 3)).toFixed(3));
     // Moon: rises once the sun is gone
     const mo = smooth(.62, 1, t);
     root.setProperty('--mo', mo.toFixed(3));
-    root.setProperty('--my', (hz * (1.02 - .66 * mo)).toFixed(1) + 'px');
+    root.setProperty('--myk', (1.02 - .66 * mo).toFixed(4));
 
     // Digits: the 9 arcs over the top, the 5 dips under — they trade places
     const s = Math.sin(Math.PI * t);
@@ -122,6 +122,11 @@
   tick(); setInterval(tick, 15000);
 
   addEventListener('resize', () => { measure(); paint(t); });
+  // In-app browsers can settle their viewport late: re-measure once things are stable
+  const remeasure = () => { measure(); paint(t); };
+  addEventListener('load', remeasure); addEventListener('pageshow', remeasure);
+  window.visualViewport && visualViewport.addEventListener('resize', remeasure);
+  setTimeout(remeasure, 700);
   (document.fonts ? document.fonts.ready : Promise.resolve()).then(() => {
     measure(); paint(0);
     if (reduce) { body.dataset.side = '0'; return; }
