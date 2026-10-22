@@ -58,7 +58,7 @@
 
   function initTopbar() {
     const bar = document.querySelector('.topbar'); if (!bar) return;
-    bar.insertAdjacentHTML('afterbegin', '<div class="tb-bg" aria-hidden="true"><div class="tb-drop"></div></div>');
+    bar.insertAdjacentHTML('afterbegin', '<div class="tb-bg" aria-hidden="true"></div>');
     liquid(bar);
     const on = () => bar.classList.toggle('scrolled', scrollY > 24);
     addEventListener('scroll', on, { passive: true }); on();
@@ -74,7 +74,7 @@
 
   // ---- Liquid bar: a damped spring fed by scroll velocity ----
   function liquid(bar) {
-    const bg = bar.querySelector('.tb-bg'), drop = bar.querySelector('.tb-drop');
+    const bg = bar.querySelector('.tb-bg');
     const kids = [...bar.children].filter(n => n !== bg);
     if (reduce) return;
     let y = -64, v = 0, lastY = scrollY, lastT = performance.now(), running = false, wasTop = scrollY <= 24;
@@ -88,14 +88,15 @@
       wasTop = top;
       v += (-K * y - C * v) * dt; y += v * dt;
       y = Math.max(-90, Math.min(70, y));
-      // content: only the gentle fall / lift, never stretched
-      const lift = y < 0 ? y * .5 : y * .08;
-      kids.forEach(n => n.style.transform = `translate3d(0,${lift.toFixed(2)}px,0)`);
-      // surface: squash and stretch
-      const s = Math.abs(y) / 100;
-      bg.style.transform = `translate3d(0,${(y < 0 ? y * .5 : 0).toFixed(2)}px,0) scale(${(1 + s * .015).toFixed(4)}, ${(1 + (y > 0 ? s * .25 : -s * .12)).toFixed(4)})`;
-      drop.style.transform = `scaleY(${y > 0 ? Math.min(1.1, y / 26).toFixed(3) : 0})`;
-      if (Math.abs(y) < .05 && Math.abs(v) < .5 && d === 0) { y = 0; v = 0; running = false; kids.forEach(n => n.style.transform = ''); bg.style.transform = ''; drop.style.transform = 'scaleY(0)'; return; }
+      // the bar itself becomes a drop: it gathers in a little from the sides, rounds its lower
+      // corners and hangs lower, carrying its content with it; at the top (y < 0) it squashes, then rebounds
+      const p = Math.max(0, Math.min(1, y / 46));
+      const side = p * Math.min(14, innerWidth * .03), r = p * 30;
+      bg.style.clipPath = `inset(-200px ${side.toFixed(1)}px 0 ${side.toFixed(1)}px round 0 0 ${r.toFixed(1)}px ${r.toFixed(1)}px)`;
+      const sq = y < 0 ? Math.min(1, -y / 60) : 0;
+      bg.style.transform = `translate3d(0,${(y < 0 ? y * .4 : p * 6).toFixed(2)}px,0) scale(${(1 + sq * .02).toFixed(4)}, ${(1 + p * .12 - sq * .14).toFixed(4)})`;
+      kids.forEach(n => n.style.transform = `translate3d(0,${(y < 0 ? y * .5 : p * 7).toFixed(2)}px,0) scale(${(1 - p * .03).toFixed(4)})`);
+      if (Math.abs(y) < .05 && Math.abs(v) < .5 && d === 0) { y = 0; v = 0; running = false; kids.forEach(n => n.style.transform = ''); bg.style.transform = ''; bg.style.clipPath = ''; return; }
       requestAnimationFrame(frame);
     }
     const wake = () => { if (!running) { running = true; lastT = performance.now(); requestAnimationFrame(frame); } };
@@ -103,6 +104,18 @@
     size(); addEventListener('resize', size);
     addEventListener('scroll', wake, { passive: true });
     wake();                                       // on arrival the bar falls in from above
+  }
+
+  // ---- Back to top: appears once you scroll down, leaves when you are back at the top ----
+  function initToTop() {
+    if (!document.querySelector('.topbar')) return;
+    const t = el(`<button class="to-top" type="button" aria-label="Back to top">${ICONS.arrow.replace('<path d="M5 12h14m0 0-6-6m6 6-6 6"/>', '<path d="M12 19V5m0 0-6 6m6-6 6 6"/>')}</button>`);
+    document.body.appendChild(t);
+    let last = scrollY;
+    addEventListener('scroll', () => { const y = scrollY;
+      if (y < 60) t.classList.remove('on'); else if (y > last + 2 && y > 240) t.classList.add('on');
+      last = y; }, { passive: true });
+    t.addEventListener('click', () => scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' }));
   }
 
   // ---- 9–5 / 5–9 switch: a small sun/moon disc, bottom right ----
@@ -140,7 +153,7 @@
   function initIcons(root = document) { root.querySelectorAll('[data-icon]').forEach(n => { if (!n.firstElementChild) n.insertAdjacentHTML('afterbegin', ICONS[n.dataset.icon] || ''); }); }
 
   window.HV = { ICONS, esc, el, istTime, istParts, t12, initReveal, initIcons, reduce };
-  document.addEventListener('DOMContentLoaded', () => { initIcons(); initTopbar(); initSwitch(); initVeil(); });
+  document.addEventListener('DOMContentLoaded', () => { initIcons(); initTopbar(); initSwitch(); initToTop(); initVeil(); });
   // Reveal after fonts load so line splitting measures real line breaks
   (document.fonts ? document.fonts.ready : Promise.resolve()).then(() => initReveal());
 })();

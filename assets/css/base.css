@@ -76,16 +76,16 @@ body.night { background: var(--night-bg); color: var(--night-ink); color-scheme:
 .topbar .home { min-height: 44px; display: inline-flex; align-items: center; gap: 10px; font-weight: 600; font-size: 15px; letter-spacing: -.01em; }
 .topbar .home .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--sun); box-shadow: 0 0 0 4px color-mix(in srgb, var(--sun) 22%, transparent); }
 .topbar .actions { display: flex; align-items: center; gap: 8px; }
-/* Liquid top bar. The surface (.tb-bg) and its drop (.tb-drop) are driven by a spring in core.js:
-   scrolling down pulls a drop out of the bar's lower edge, stopping lets it snap back with a wobble,
-   arriving at the top makes the bar land like a falling drop. Content never distorts, only the surface. */
+/* Liquid top bar. The bar's own surface (.tb-bg) is shaped by a spring in core.js:
+   while you scroll, the bar gathers into a drop (pulls in from the sides, its lower corners round off,
+   it hangs a little lower), and when you stop it spreads back flat with a wobble. Reaching the top,
+   it squashes and rebounds like a landing drop. Text and buttons never distort. */
 .topbar { --tb: transparent; --tb-line: transparent; }
 body.day .topbar { --tb: color-mix(in srgb, var(--day-bg) 95%, transparent); --tb-solid: var(--day-bg); --tb-line: var(--day-line); }
 body.night .topbar { --tb: color-mix(in srgb, var(--night-bg) 93%, transparent); --tb-solid: var(--night-bg); --tb-line: var(--night-line); }
-.tb-bg { position: absolute; inset: 0; z-index: -1; pointer-events: none; opacity: 0; transition: opacity .45s var(--ease-out); transform-origin: 50% 0; }
+.tb-bg { position: absolute; inset: 0; z-index: -1; pointer-events: none; opacity: 0; transition: opacity .45s var(--ease-out); transform-origin: 50% 0; will-change: clip-path, transform; }
 /* the surface also reaches far above the bar, so no page content ever shows through the status-bar area (iOS) */
 .tb-bg::before { content: ""; position: absolute; left: 0; right: 0; bottom: 0; top: -200px; background: var(--tb-solid); backdrop-filter: blur(14px) saturate(1.2); -webkit-backdrop-filter: blur(14px) saturate(1.2); box-shadow: 0 1px 0 var(--tb-line); }
-.tb-drop { position: absolute; left: 50%; top: calc(100% - 10px); width: var(--dw, 60vw); height: 34px; z-index: 1; margin-left: calc(var(--dw, 60vw) / -2); background: var(--tb-solid); border-radius: 0 0 50% 50% / 0 0 100% 100%; box-shadow: 0 1px 0 var(--tb-line); transform-origin: 50% 0; transform: scaleY(0); }
 .topbar.scrolled .tb-bg { opacity: 1; }
 .topbar > .tb-bg { pointer-events: none; }
 
@@ -184,4 +184,16 @@ body.night .grain { opacity: .07; mix-blend-mode: screen; filter: invert(1); }
   .switch:hover .sw-disc { transform: rotate(-24deg) scale(1.04); }
 }
 .switch:active .sw-disc { transform: rotate(-30deg) scale(.92); }
+@media (max-width: 560px) { .switch { padding-right: 6px; gap: 0; } .sw-text { display: none; } }
 @media print { .switch { display: none !important; } }
+
+/* ---------- Back to top (bottom centre) ---------- */
+.to-top { position: fixed; z-index: 59; left: 50%; bottom: max(22px, env(safe-area-inset-bottom)); width: 46px; height: 46px; margin-left: -23px; border-radius: 50%; display: grid; place-items: center;
+  opacity: 0; transform: translateY(24px) scale(.6); pointer-events: none; transition: opacity .35s, transform .6s cubic-bezier(.34, 1.56, .64, 1); }
+.to-top.on { opacity: 1; transform: none; pointer-events: auto; }
+.to-top svg { width: 20px; height: 20px; transition: transform .45s cubic-bezier(.34, 1.56, .64, 1); }
+body.day .to-top { background: var(--day-ink); color: var(--day-paper); box-shadow: 0 12px 28px -12px rgba(0,0,0,.5); }
+body.night .to-top { background: var(--night-ink); color: var(--night-bg); box-shadow: 0 12px 28px -10px rgba(0,0,0,.8); }
+@media (hover: hover) { .to-top:hover svg { transform: translateY(-3px); } }
+.to-top:active { transform: scale(.9); }
+@media print { .to-top { display: none !important; } }
