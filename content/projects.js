@@ -23,6 +23,7 @@
        { t:"video", src, poster, cap, frame:"browser"|"none" }
        { t:"grid",  cols:2|3, items:[{ src, alt, cap }], frame:"browser"|"none" }
        { t:"phones", items:[{ src, cap }] }   // phone screens in a row that can be dragged sideways
+       { t:"compare", h, p, left:"Today", right:"This design", rows:[["before","after"], …] }  // side-by-side comparison
    ========================================================================== */
 window.PROJECTS = [
   {
@@ -36,9 +37,18 @@ window.PROJECTS = [
     intro: "Kosh is a concept trading platform for beginner-to-intermediate investors who find today's broker apps noisy. It covers equity, F&O with an option chain, mutual funds and SIPs, IPOs, ETFs, GTT orders and a news section that informs without pushing trades.",
     facts: [["Type", "Product design concept"], ["Platforms", "Web · Mobile"], ["Screens", "7 web · 13 mobile"], ["Year", "2026"]],
     blocks: [
-      { t: "list", h: "Starting from complaints, not features",
-        p: "Before drawing anything, I read public reviews and forum threads about eleven Indian broker apps and kept only the problems an app could actually fix. Nine came up again and again:",
-        items: ["Order tickets that quietly change their defaults", "Useful features removed in redesigns", "Related tasks split across separate apps", "Promotions mixed into trading screens", "Watchlist sorting that doesn't stay put", "P&L and returns that are hard to read", "GTT orders with an unclear status", "Screens that are awkward to use one-handed", "Option chains that are hard to scan"] },
+      { t: "text", h: "The problem",
+        p: ["Indian broker apps are built for frequent trading, but most people opening them are new investors. SEBI's own study found that 93% of individual F&O traders lost money between FY22 and FY24, with combined losses of over ₹1.8 lakh crore. Yet most apps put derivatives, offers and buy buttons a tap away from everything.",
+            "Before drawing anything, I read public reviews and forum threads about eleven Indian broker apps and kept only the complaints an interface could actually fix."] },
+      { t: "compare", h: "Common complaints, and what Kosh does", left: "What users complain about", right: "In Kosh",
+        rows: [
+          ["Option chains are dense and the order ticket leads with the premium, not the risk.", "The option-chain ticket shows the maximum possible loss first."],
+          ["F&O is switched on in a couple of taps, and the risk is buried in small print.", "F&O stays off until you choose it, with SEBI's loss figures shown before you switch it on."],
+          ["GTT orders sit in a separate place, with an unclear status.", "Orders and GTT share one screen, and every trigger shows a clear status."],
+          ["Related tasks are split across separate apps for stocks, funds and IPOs.", "SIPs, mutual funds and IPOs live inside the same app."],
+          ["News is mixed with buy buttons and promotions, nudging people to trade.", "Briefing is a reading room for news, with no trade buttons."],
+          ["Placing an order means filling a form field by field.", "Type \"buy 10 tcs at 4100\" in ⌘K and the ticket explains what will happen before anything is placed."]
+        ] },
       { t: "img", src: "web-chain.webp", alt: "Kosh option chain with order ticket showing maximum loss", cap: "Option chain. The ticket leads with the maximum loss, not the premium.", frame: "browser", fit: "wide" },
       { t: "text", h: "Borrowed from good desktop software", p: ["The visual direction comes from well-made Mac apps rather than other trading apps: quiet surfaces, a clear hierarchy, and dense data that stays readable.", "A ⌘K bar handles search and orders in plain words. Typing \"buy 10 tcs at 4100\" fills the ticket and explains what will happen before anything is placed."] },
       { t: "grid", cols: 2, frame: "browser", items: [
@@ -68,7 +78,7 @@ window.PROJECTS = [
     cover: "cover.webp", tile: "tile.mp4", size: "",
     summary: "One scroll turns a hand sketch into a finished home.",
     intro: "Plotform designs layout plans, 3D elevations and furnished interiors for Indian homes. Its website tells that story in a single scroll: a hand sketch becomes a measured plan, then a 3D plan, then furnished rooms, a tilted perspective and finally the lit elevation.",
-    facts: [["Type", "Website"], ["Status", "Live"], ["Pages", "Home, Designs, guides, brief form"], ["Year", "2026"]],
+    facts: [["Type", "Website"], ["Status", "Live"], ["Pages", "Home, designs, guides, brief form"], ["Year", "2026"]],
     links: [{ label: "Visit plotform.design", url: "https://plotform.design" }],
     blocks: [
       { t: "video", src: "scroll.mp4", poster: "scroll.webp", cap: "The home page, scrolled from top to bottom. The house is drawn live in the browser.", frame: "browser" },
@@ -91,12 +101,12 @@ window.PROJECTS = [
     links: [{ label: "Open LoanLens", url: "https://harshadvaha.github.io/LoanLens/" }, { label: "Source on GitHub", url: "https://github.com/harshadvaha/LoanLens" }],
     blocks: [
       { t: "video", src: "demo.mp4", poster: "demo.webp", cap: "Every input has a slider. The cost breakdown and the advice update as you drag.", frame: "browser" },
-      { t: "text", h: "One comparable number", p: ["Two loans with the same headline rate can cost very different amounts once fees and insurance are added. LoanLens folds them into one all-in rate, so offers can be ranked by what they really cost."] },
+      { t: "text", h: "One comparable number", p: ["Two loans with the same headline rate can cost very different amounts once fees and insurance are added. Since October 2024 the RBI has required lenders to share a Key Facts Statement with an all-inclusive annual rate, but most online calculators still stop at the EMI.", "LoanLens folds fees, GST and insurance into one all-in rate, so offers can be ranked by what they really cost."] },
       { t: "grid", cols: 2, frame: "browser", items: [
         { src: "compare.webp", alt: "Compare offers screen", cap: "Compare offers, ranked by total cost" },
         { src: "prepay.webp", alt: "Prepayment screen", cap: "Prepay: lower EMI or shorter tenure?" },
         { src: "refinance.webp", alt: "Refinance screen", cap: "Refinance: when does switching pay off?" },
-        { src: "new-dark.webp", alt: "New loan screen in dark mode", cap: "Light and dark themes" }
+        { src: "new-dark.webp", alt: "New loan screen in dark mode", cap: "Dark theme" }
       ] },
       { t: "list", h: "What's inside", items: ["True cost of a new loan, with a full amortisation schedule", "Saved loans with a health check against the best rate you were quoted", "Offer comparison ranked by total cost", "Prepayment and refinance break-even", "Rate-rise and affordability stress tests", "A learning section on how rates and RBI rules work"] },
       { t: "phones", h: "On the phone", items: [{ src: "m-home.webp", cap: "Home" }, { src: "m-new.webp", cap: "New loan" }] },
@@ -118,13 +128,19 @@ window.PROJECTS = [
       { t: "phones", h: "The core flows", items: [
         { src: "s01.webp", cap: "Home" }, { src: "s02.webp", cap: "Scan & pay" }, { src: "s03.webp", cap: "Pay" }, { src: "s04.webp", cap: "Check balance" }, { src: "s09.webp", cap: "Bills & recharge" }
       ] },
-      { t: "list", h: "What changed", items: [
-        "Scan, pay a contact, pay a UPI ID and transfer to your own account sit together at the top",
-        "Balance is one tap from home, and visible inside the payment flow",
-        "No ads on balance or payment-confirmation screens; one clearly labelled sponsored slot on home",
-        "The torch moved below the scan frame for thumb reach, with 1×, 2× and 4× zoom for codes far away",
-        "Bills and recharges grouped by what is due soon"
-      ] },
+      { t: "text", h: "The problem",
+        p: ["UPI handled 23.2 billion payments in May 2026, and two apps carry about four in five of them (NPCI data, via Inc42). For most people these apps are now as routine as a wallet, yet their home screens have grown into marketplaces for loans, insurance, rewards and shopping.",
+            "India's consumer regulator (CCPA) has listed disguised ads and interface interference among the dark patterns apps should avoid. This concept asks what a payments home looks like when it is built around the few things people open it for."] },
+      { t: "compare", h: "What's different from today's apps",
+        p: "Compared with the home screens of the most-used UPI apps in India:",
+        left: "Typical UPI app today", right: "This concept",
+        rows: [
+          ["The home screen opens on offers, rewards and loan or insurance banners. The four daily actions compete with a dozen other tiles.", "Scan, pay a contact, pay a UPI ID and transfer to your own account sit together at the top. Everything else is one level down."],
+          ["Checking balance is a separate trip: leave what you were doing, open another screen, enter the PIN.", "Balance is one tap from home and also shown inside the payment flow, so you know before you pay."],
+          ["Scratch cards and ads appear on balance and payment-success screens, right when you want to confirm the money moved.", "No ads on balance or confirmation screens. One clearly labelled sponsored slot on home, and nowhere else."],
+          ["Scanner controls sit near the top of the screen, out of thumb reach, and a QR code on a far wall is hard to read.", "Torch and zoom (1×, 2×, 4×) sit just under the scan frame, within reach of one thumb."],
+          ["Bills are filed by category, so you hunt for the one that is due.", "Bills and recharges are sorted by due date, so what is due soon is on top."]
+        ] },
       { t: "phones", h: "Every other screen", items: [
         { src: "s05.webp", cap: "To own account" }, { src: "s06.webp", cap: "UPI ID or number" }, { src: "s07.webp", cap: "Pay a contact" }, { src: "s08.webp", cap: "My QR" },
         { src: "s10.webp", cap: "Electricity bill" }, { src: "s11.webp", cap: "Mobile recharge" }, { src: "s12.webp", cap: "Find your biller" }, { src: "s13.webp", cap: "History" },
@@ -145,6 +161,7 @@ window.PROJECTS = [
     intro: "Lavan means salt in Sanskrit. The brand comes from a white salt desert, where the ground cracks into hexagons each dry season and flamingos arrive at dawn. Every decision in the identity, from the mark to the palette to the product names, comes from that one landscape.",
     facts: [["Type", "Brand identity"], ["Includes", "Logo, palette, type, packaging, social"], ["Brand", "Fictional"], ["Year", "2026"]],
     blocks: [
+      { t: "text", h: "The brief I set", p: ["Can a skincare brand feel rooted in a real Indian place, instead of the generic spa-and-botanicals look the category often borrows?", "The place is the Rann of Kutch in Gujarat. After the monsoon its water dries into a salt desert, and its mudflats hold Flamingo City, the only site in India where greater flamingos breed regularly (Gujarat Tourism). A salt hexagon split by one crack became the mark, flamingo pink became the only bright colour, and the four products are named after stages of the salt cycle."] },
       { t: "img", src: "s01.webp", alt: "Lavan brand story", fit: "full" },
       { t: "img", src: "s02.webp", alt: "Lavan monogram and logo system", fit: "full" },
       { t: "img", src: "s03.webp", alt: "Lavan colour palette", fit: "full" },
@@ -162,7 +179,7 @@ window.PROJECTS = [
     kind: "Open brief", cat: "Brand", year: "2026",
     bg: "#1C1D21", tone: "dark", accent: "#ED1C26",
     cover: "cover.webp", size: "wide",
-    summary: "Same grip, much angrier load.",
+    summary: "Wrong attachment. Right catch.",
     intro: "A response to an open brief from MCT Equipment for a long-sleeve performance fishing shirt for their crew. Their tyre-handler machine grips a marlin instead of a tyre, under the line \"Wrong attachment. Right catch.\" The artwork follows MCT's own guidelines for colour, type and logo use.",
     facts: [["Type", "Apparel & illustration"], ["Includes", "Front, back & sleeves, print template, 3D mock-up"], ["Files", "Print-ready vector"], ["Year", "2026"]],
     blocks: [
@@ -189,7 +206,7 @@ window.PROJECTS = [
     facts: [["Type", "Web app"], ["Status", "Live"], ["Works on", "Phone & laptop browsers"], ["Year", "2026"]],
     links: [{ label: "Open Sing Along", url: "https://harshadvaha.github.io/Sing-Along/" }, { label: "Source on GitHub", url: "https://github.com/harshadvaha/Sing-Along" }],
     blocks: [
-      { t: "video", src: "demo.mp4", poster: "demo.webp", cap: "The built-in demo tape. The current line glows; the next one waits below.", frame: "browser" },
+      { t: "video", src: "demo.mp4", poster: "demo.webp", cap: "The built-in demo tape, at real speed. The current line glows; the next one waits below.", frame: "browser" },
       { t: "text", h: "Why it doesn't play music", p: ["Music apps already do that well. Sing Along only does the part they don't: big, readable lines in sync, a clear cue for when the vocals start, and quick rewind for the line you missed."] },
       { t: "grid", cols: 2, frame: "browser", items: [
         { src: "idle.webp", alt: "Sing Along start screen", cap: "Search for a song, or try the demo" },
@@ -210,6 +227,7 @@ window.PROJECTS = [
     intro: "A complete identity for a fictional clean-beauty brand for 20 to 35 year olds. The mark comes from the moment a drop of serum lands on skin, so it stays away from the usual leaf icons. The system covers a wordmark and monogram, an earthy palette with one ochre accent, three typefaces, packaging, stationery and social templates.",
     facts: [["Type", "Brand identity"], ["Includes", "Logo, palette, type, packaging, social"], ["Brand", "Fictional"], ["Year", "2026"]],
     blocks: [
+      { t: "text", h: "The brief I set", p: ["\"Clean\" and \"natural\" are some of the most overused words in beauty, and brand founders themselves call them out as greenwashing when nothing backs them up (Beauty Independent).", "So Saelin avoids leaf icons and green-wash cues. The identity comes from one observable moment, a drop of serum landing on skin, and keeps the claims to what the product does in a short daily routine for 20 to 35 year olds."] },
       { t: "img", src: "s01.webp", alt: "Saelin logo system", fit: "full" },
       { t: "img", src: "s02.webp", alt: "Saelin colour palette", fit: "full" },
       { t: "img", src: "s03.webp", alt: "Saelin typography", fit: "full" },
@@ -228,7 +246,7 @@ window.PROJECTS = [
     bg: "#1D2436", tone: "dark", accent: "#C9A45C",
     cover: "cover.webp", size: "wide",
     summary: "Ten print pieces, one navy-and-gold system.",
-    intro: "A response to an open brief for Elevate Healthcare Solutions, a practice-management partner for clinics and medical groups. Ten pieces share one system: a trifold pamphlet, a packages sheet, a presentation folder with inserts, business cards, a proposal template, a tabletop presenter, a box lid with insert card and a thank-you card.",
+    intro: "A response to an open brief for Elevate Healthcare Solutions, a practice-management partner for clinics and medical groups. Ten pieces share one system: a trifold pamphlet, a packages sheet, a presentation folder, folder inserts, business cards, a proposal template, a tabletop presenter, a box lid, a box insert card and a thank-you card.",
     facts: [["Type", "Print design"], ["Pieces", "10"], ["Output", "Print-ready PDF"], ["Year", "2026"]],
     blocks: [
       { t: "grid", cols: 2, items: [
@@ -248,3 +266,15 @@ window.PROJECTS = [
     note: "Elevate Healthcare Solutions' name belongs to its owner. Shown here as a response to an open design brief."
   }
 ];
+
+/* Design groundwork: completed LinkedIn Learning courses, shown near the end of /after-hours/ */
+window.DESIGN_LEARNING = {
+  intro: "The design side started with a UX course track in 2021.",
+  items: [
+    { title: "UX Design series, 7 courses", note: "Overview, user data, personas, ideation, scenarios & storyboards, paper prototyping, implementation planning", year: "2021" },
+    { title: "UX Foundations: Prototyping", year: "2021" },
+    { title: "UX Foundations: Multidevice Design", year: "2021" },
+    { title: "Figma for UX Design", year: "2021" },
+    { title: "Agile Requirements Foundations", year: "2021" }
+  ]
+};

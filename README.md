@@ -8,11 +8,11 @@ The landing page swaps them as the sky turns from day to night.
 | Side | URL | Theme | What it is |
 |---|---|---|---|
 | Start | `/` | day → night | Two doors: the day job, or after hours |
-| 9 to 5 | `/work/` | day (bone paper, ink, orange sun) | Résumé |
+| 9 to 5 | `/work/` | day (bone paper, ink, orange sun) | Resume |
 | 5 to 9 | `/after-hours/` | night (violet-black, lavender moon) | Projects |
 | Project | `/after-hours/project/?p=<id>` | night + project colour | One case study |
 
-The two sides are deliberately separate. The résumé links to the projects only once, at the very bottom ("17:00 · Clocking out"), and contains no design work.
+The two sides are deliberately separate. The Resume links to the projects only once, at the very bottom ("5:00 PM · Clocking out"), and contains no design work.
 
 ---
 
@@ -20,12 +20,12 @@ The two sides are deliberately separate. The résumé links to the projects only
 
 ```
 content/
-  resume.js        ← ALL résumé text (summary, facts, jobs, skills, education, LinkedIn URL)
+  resume.js        ← ALL Resume text (summary, facts, jobs, skills, education, LinkedIn URL)
   projects.js      ← ALL projects: order, text, tags, colours, and the blocks on each project page
 assets/
   css/base.css     ← fonts, colour tokens, buttons, shared animations
   css/landing.css  ← start page
-  css/work.css     ← résumé page
+  css/work.css     ← Resume page
   css/after.css    ← projects grid
   css/project.css  ← project page
   js/core.js       ← shared helpers: icons, scroll reveals, page transition
@@ -41,7 +41,7 @@ index.html, work/index.html, after-hours/index.html, after-hours/project/index.h
 
 ### Common changes
 
-- **Change résumé wording** → edit `content/resume.js`. Then regenerate the PDF if the downloadable version should match (see below).
+- **Change Resume wording** → edit `content/resume.js`. Then regenerate the PDF if the downloadable version should match (see below).
 - **Add a project** → put media in `assets/projects/<new-id>/` (at least `cover.webp` and `hero.webp`; those two names are reserved for the tile and the page hero), then add an object to `content/projects.js`. The field list and every block type are documented at the top of that file.
 - **Reorder projects** → reorder the objects in `content/projects.js`.
 - **Tile shape** → `size: "wide"` (16:10), `""` (6:5) or `"tall"` (4:5). Tiles in the same row always share one height.
@@ -77,3 +77,10 @@ index.html, work/index.html, after-hours/index.html, after-hours/project/index.h
 
 Any static server works, for example `python3 -m http.server` in this folder, then open http://localhost:8000.
 Opening `index.html` directly from the file system also works.
+
+## v2 notes
+- All times on the site are 12-hour (helper `HV.t12()` in `assets/js/core.js`).
+- Courses: Resume side → `learning` in `content/resume.js` (shown under Education and in the PDF).
+  Projects side → `window.DESIGN_LEARNING` at the bottom of `content/projects.js` (shown before "Say hello").
+- New project block type `compare` (today's apps vs this design) — see the field list at the top of `content/projects.js`.
+- PDF source: regenerate after changing `content/resume.js` so the download matches the page.

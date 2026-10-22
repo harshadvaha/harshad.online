@@ -70,6 +70,19 @@ window.RESUME = {
     { group: "Working with people", items: ["Client Advisory & Data Storytelling", "Stakeholder Management", "Cross-functional Collaboration", "Tool Adoption"] }
   ],
 
+  // Completed LinkedIn Learning courses, shown under Education (kept short: only ones that add value)
+  learning: [
+    { title: "Getting Started as a Business Analyst", note: "Learning path", year: "2021" },
+    { title: "Data Visualization: Storytelling", year: "2025" },
+    { title: "Data Visualization for Data Analysts and Analytics", year: "2025" },
+    { title: "Learning Microsoft Power BI Desktop", year: "2021" },
+    { title: "Data Analytics for Business Professionals", year: "2021" },
+    { title: "SQL Server Fundamentals: Master Basic Query Techniques", year: "2021" },
+    { title: "Six Sigma Foundations", year: "2021" },
+    { title: "Lean Foundations", year: "2021" },
+    { title: "Communicating with Confidence", year: "2025" }
+  ],
+
   education: {
     degree: "Bachelor of Engineering, Mechanical",
     school: "Gujarat Technological University",

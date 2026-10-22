@@ -23,9 +23,14 @@
   const el = (html) => { const t = document.createElement('template'); t.innerHTML = html.trim(); return t.content.firstElementChild; };
 
   // Time in India, for the little live clocks
-  function istTime(d = new Date()) {
-    return new Intl.DateTimeFormat('en-GB', { timeZone: 'Asia/Kolkata', hour: '2-digit', minute: '2-digit', hour12: false }).format(d);
+  // 12-hour format everywhere, e.g. "10:48 AM"
+  const t12 = (H, M) => `${(H % 12) || 12}:${String(M).padStart(2, '0')} ${H < 12 ? 'AM' : 'PM'}`;
+  function istParts(d = new Date()) {
+    const p = new Intl.DateTimeFormat('en-GB', { timeZone: 'Asia/Kolkata', hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: false }).formatToParts(d);
+    const g = t => +p.find(x => x.type === t).value;
+    return { H: g('hour') % 24, M: g('minute'), S: g('second') };
   }
+  function istTime(d = new Date()) { const { H, M } = istParts(d); return t12(H, M); }
 
   // Split an element's text into masked lines for the line reveal.
   function splitLines(node) {
@@ -47,6 +52,8 @@
     root.querySelectorAll('.lines').forEach(splitLines);
     const io = new IntersectionObserver(entries => entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { rootMargin: '0px 0px -8% 0px', threshold: .08 });
     els.forEach(e => io.observe(e));
+    // Safety net for big jumps (anchor links, fast flings): anything already passed is shown
+    let q = 0; addEventListener('scroll', () => { if (q) return; q = requestAnimationFrame(() => { q = 0; root.querySelectorAll('.rv:not(.in), .lines:not(.in)').forEach(e => { if (e.getBoundingClientRect().top < innerHeight) e.classList.add('in'); }); }); }, { passive: true });
   }
 
   function initTopbar() {
@@ -74,7 +81,7 @@
   // Fill any [data-icon="name"] with the matching SVG
   function initIcons(root = document) { root.querySelectorAll('[data-icon]').forEach(n => { if (!n.firstElementChild) n.insertAdjacentHTML('afterbegin', ICONS[n.dataset.icon] || ''); }); }
 
-  window.HV = { ICONS, esc, el, istTime, initReveal, initIcons, reduce };
+  window.HV = { ICONS, esc, el, istTime, istParts, t12, initReveal, initIcons, reduce };
   document.addEventListener('DOMContentLoaded', () => { initIcons(); initTopbar(); initVeil(); });
   // Reveal after fonts load so line splitting measures real line breaks
   (document.fonts ? document.fonts.ready : Promise.resolve()).then(() => initReveal());

@@ -64,7 +64,12 @@
   // ---- Tile video ----
   function play(t, on) {
     const v = t.querySelector('video'); if (!v || HV.reduce) return;
-    if (on) { if (!v.src) v.src = v.dataset.src; v.play().then(() => t.classList.add('playing')).catch(() => {}); }
+    if (on) {
+      if (!v.src) v.src = v.dataset.src;
+      const show = () => t.classList.add('playing');
+      // reveal only once a real frame is painted, so the cover never blinks to black
+      v.play().then(() => { 'requestVideoFrameCallback' in v ? v.requestVideoFrameCallback(show) : setTimeout(show, 120); }).catch(() => {});
+    }
     else { t.classList.remove('playing'); setTimeout(() => v.pause(), 500); }
   }
   let vio;
@@ -87,7 +92,7 @@
     addEventListener('pointermove', e => { cx = e.clientX; cy = e.clientY; cursor.style.setProperty('--cx', cx + 'px'); cursor.style.setProperty('--cy', cy + 'px'); }, { passive: true });
   }
 
-  // ---- Night dial: real India time with 17:00–21:00 marked ----
+  // ---- Night dial: real India time with 5 PM – 9 PM marked ----
   (function nightDial() {
     const svg = $('night-dial'), C = 100;
     const P = (a, r) => [C + r * Math.sin(a * Math.PI / 180), C - r * Math.cos(a * Math.PI / 180)];
@@ -100,16 +105,20 @@
     svg.innerHTML = h;
     const nh = $('nh'), nm = $('nm'), cap = $('night-cap');
     function set() {
-      const parts = new Intl.DateTimeFormat('en-GB', { timeZone: 'Asia/Kolkata', hour: 'numeric', minute: 'numeric', hour12: false }).formatToParts(new Date());
-      const g = t => +parts.find(p => p.type === t).value; const H = g('hour') % 24, M = g('minute');
+      const { H, M } = HV.istParts();
       nh.style.transform = `rotate(${(H % 12) * 30 + M * .5}deg)`; nm.style.transform = `rotate(${M * 6}deg)`;
-      const tt = `${String(H).padStart(2, '0')}:${String(M).padStart(2, '0')} IST`;
+      const tt = `${HV.t12(H, M)} IST`;
       if (H >= 17 && H < 21) cap.textContent = `After hours · ${tt}`;
       else if (H >= 9 && H < 17) { const left = (17 * 60) - (H * 60 + M); cap.textContent = `${tt} · after hours in ${Math.floor(left / 60)}h ${String(left % 60).padStart(2, '0')}m`; }
       else cap.textContent = `${tt} · resting`;
     }
     set(); setInterval(set, 20000);
   })();
+
+  // ---- Design groundwork (courses), placed after the projects ----
+  const L = window.DESIGN_LEARNING, gw = $('groundwork');
+  if (L && gw) gw.innerHTML = `<div class="gw-head rv"><p class="mono">Groundwork · LinkedIn Learning</p><h2 class="display" id="gw-h">Where it started</h2><p class="gw-intro">${esc(L.intro)}</p></div>
+    <ol class="gw-list rv" style="--d:.1s">${L.items.map(c => `<li><span class="gw-t">${esc(c.title)}${c.note ? `<span class="gw-n">${esc(c.note)}</span>` : ''}</span><span class="mono">${esc(c.year)}</span></li>`).join('')}</ol>`;
 
   $('yr').textContent = new Date().getFullYear();
   render();

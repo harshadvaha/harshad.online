@@ -6,13 +6,13 @@
 body.landing {
   --top: var(--day-bg); --hz: #F1E2CC; --ink: var(--day-ink); --ink2: var(--day-ink-2); --line: rgba(22,24,27,.22); --water: #E2DDD2;
   --hzY: 63svh; --ds: min(46svh, 29vw);
-  height: 100svh; min-height: 560px; overflow: hidden; color: var(--ink); background: var(--top);
+  height: 100svh; min-height: 560px; overflow: hidden; touch-action: none; overscroll-behavior: none; color: var(--ink); background: var(--top);
 }
 
 /* ---------- Sky ---------- */
 .sky { position: fixed; inset: 0; background: linear-gradient(180deg, var(--top) 0%, var(--hz) var(--hzY), var(--water) var(--hzY), var(--water) 100%); }
 .sky .glow { position: absolute; left: 0; right: 0; top: calc(var(--hzY) - 40svh); height: 40svh; background: radial-gradient(60% 100% at var(--sx, 30%) 100%, color-mix(in srgb, var(--sun) calc(var(--glow, 0) * 60%), transparent), transparent 70%); pointer-events: none; }
-.sky .sun { position: absolute; width: calc(var(--ds) * .52); aspect-ratio: 1; border-radius: 50%; background: radial-gradient(circle at 38% 34%, #FF8A4C, var(--sun) 58%, #C63D10 100%); left: var(--sx, 30%); top: var(--sy, 20svh); translate: -50% -50%; box-shadow: 0 0 calc(var(--ds) * .4) color-mix(in srgb, var(--sun) 35%, transparent); }
+.sky .sun { position: absolute; width: calc(var(--ds) * .52); aspect-ratio: 1; border-radius: 50%; background: radial-gradient(circle at 38% 34%, #FFD877, var(--sun) 58%, #C27606 100%); left: var(--sx, 30%); top: var(--sy, 20svh); translate: -50% -50%; box-shadow: 0 0 calc(var(--ds) * .4) color-mix(in srgb, var(--sun) 35%, transparent); }
 .sky .moon { position: absolute; width: calc(var(--ds) * .22); aspect-ratio: 1; border-radius: 50%; left: var(--mx, 84%); top: var(--my, 70svh); translate: -50% -50%; opacity: var(--mo, 0); background: var(--moon); -webkit-mask: radial-gradient(circle at 68% 34%, transparent 46%, #000 47%); mask: radial-gradient(circle at 68% 34%, transparent 46%, #000 47%); filter: drop-shadow(0 0 22px rgba(201,194,255,.45)); }
 .sky .water { position: absolute; left: 0; right: 0; top: var(--hzY); bottom: 0; overflow: hidden; background: var(--water); }
 .sky .sun-reflect { position: absolute; left: var(--sx, 30%); top: 0; width: calc(var(--ds) * .5); height: 70%; translate: -50% 0; background: repeating-linear-gradient(180deg, color-mix(in srgb, var(--sun) 70%, transparent) 0 3px, transparent 3px 9px); -webkit-mask: linear-gradient(180deg, #000, transparent 80%); mask: linear-gradient(180deg, #000, transparent 80%); opacity: var(--ro, .35); filter: blur(.6px); }
@@ -42,7 +42,7 @@ body.landing {
 
 /* ---------- Doors (the two choices) ---------- */
 .doors { position: fixed; z-index: 4; left: 0; right: 0; bottom: 0; display: grid; grid-template-columns: 1fr auto 1fr; align-items: end; gap: 24px; padding: 0 var(--gutter) max(26px, env(safe-area-inset-bottom)); }
-.door { display: grid; gap: 8px; max-width: 360px; padding: 18px 0 4px; color: var(--ink); transition: opacity .5s var(--ease-out), transform .6s var(--ease-out); animation: rise .9s .55s var(--ease-out) both; }
+.door { touch-action: manipulation; display: grid; gap: 8px; max-width: 360px; padding: 18px 0 4px; color: var(--ink); transition: opacity .5s var(--ease-out), transform .6s var(--ease-out); animation: rise .9s .55s var(--ease-out) both; }
 .door.night-door { justify-self: end; text-align: right; animation-delay: .65s; }
 .door .when { color: var(--ink2); }
 .door .title { font-size: clamp(30px, 3.4vw, 46px); }
@@ -57,7 +57,7 @@ body.landing {
 .door .go::before { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 1px; background: currentColor; transform: scaleX(.25); transform-origin: left; transition: transform .6s var(--ease-out); }
 .door.night-door .go::before { transform-origin: right; }
 .door:hover .go::before, .door:focus-visible .go::before { transform: scaleX(1); }
-body.landing[data-side="0"] .night-door, body.landing[data-side="1"] .day-door { opacity: .42; }
+body.landing[data-side="0"] .night-door, body.landing[data-side="1"] .day-door { opacity: .7; }
 
 .hint { display: flex; align-items: center; gap: 10px; color: var(--ink2); padding-bottom: 10px; animation: rise .9s .8s var(--ease-out) both; }
 .hint i { position: relative; width: 84px; height: 1px; background: var(--line); }
@@ -68,6 +68,7 @@ body.landing[data-side="0"] .night-door, body.landing[data-side="1"] .day-door {
   body.landing { --hzY: 46svh; --ds: min(52vw, 30svh); }
   .doors { grid-template-columns: 1fr; gap: 0; padding-bottom: max(18px, env(safe-area-inset-bottom)); }
   .hint { display: none; }
+  .sky .sun-reflect { height: 32%; }
   .door, .door.night-door { justify-self: stretch; text-align: left; max-width: none; padding: 16px 0; border-top: 1px solid var(--line); grid-template-columns: 1fr auto; grid-template-areas: "when go" "title go" "what what"; gap: 4px 12px; }
   .door .when { grid-area: when; } .door .title { grid-area: title; font-size: 30px; } .door .what { grid-area: what; font-size: 14px; margin: 0 !important; }
   .door .go, .door.night-door .go { grid-area: go; align-self: center; font-size: 0; padding: 0; }

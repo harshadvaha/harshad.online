@@ -1,7 +1,8 @@
 /* ==========================================================================
    LANDING — drives the day/night sky and the 9 ⇄ 5 swap.
    t = 0 is noon (9 to 5), t = 1 is night (5 to 9).
-   Desktop: pointer position sets t. Touch or idle: it cycles by itself.
+   Desktop: pointer position, wheel or click sets t. Touch: swipe or tap.
+   Left alone for a few seconds, it cycles by itself.
    To change sky colours, edit the three palettes below.
    ========================================================================== */
 (function () {
@@ -10,7 +11,7 @@
 
   // ---- Palettes: day → dusk → night ----
   const DAY   = { top: '#ECE9E1', hz: '#F2E1C8', water: '#E2DDD2', ink: '#16181B', ink2: '#56585B', line: [22, 24, 27, .22] };
-  const DUSK  = { top: '#4A3C5E', hz: '#F0905E', water: '#2E2738' };
+  const DUSK  = { top: '#4A3C5E', hz: '#E9A04F', water: '#2E2738' };
   const NIGHT = { top: '#0D0C11', hz: '#271D38', water: '#110F17', ink: '#ECE8F1', ink2: '#A29CB0', line: [236, 232, 241, .18] };
 
   const hex = h => [1, 3, 5].map(i => parseInt(h.slice(i, i + 2), 16));
@@ -73,11 +74,13 @@
   function frame(now) {
     const dt = Math.min(64, now - last); last = now;
     // Idle or touch: cycle on its own, pausing at each end
-    if (now - lastInput > 4200 && !reduce) {
+    if (now - lastInput > 6000 && !reduce) {
       auto += dt;
       const period = 7600, ph = (auto % period) / period;
       target = ph < .42 ? 0 : ph < .5 ? (ph - .42) / .08 : ph < .92 ? 1 : 1 - (ph - .92) / .08;
     }
+    // Never rest half-way: after a short pause, settle on day or night
+    if (now - lastInput > 900 && target > 0 && target < 1 && now - lastInput < 6000) target = target < .5 ? 0 : 1;
     const k = 1 - Math.pow(1 - .085, dt / 16.7);
     t += (target - t) * k;
     if (Math.abs(target - t) < .0005) t = target;
@@ -89,8 +92,25 @@
   addEventListener('pointermove', e => {
     if (e.pointerType !== 'mouse') return;
     lastInput = performance.now(); auto = 0;
-    target = smooth(.28, .72, e.clientX / innerWidth);
+    target = smooth(.4, .6, e.clientX / innerWidth);
   }, { passive: true });
+  // Scroll wheel / trackpad, swipe and tap also move the sky (anywhere except the two doors)
+  const onDoor = e => e.target && e.target.closest && e.target.closest('.door, .lbar');
+  const nudge = d => { lastInput = performance.now(); auto = 0; target = clamp(target + d); };
+  addEventListener('wheel', e => { if (onDoor(e)) return; nudge((e.deltaY + e.deltaX) * .0011); }, { passive: true });
+  let tx = 0, ty = 0, sx0 = 0, sy0 = 0, touching = false;
+  addEventListener('touchstart', e => { if (onDoor(e)) { touching = false; return; } const p = e.touches[0]; touching = true; tx = sx0 = p.clientX; ty = sy0 = p.clientY; lastInput = performance.now(); auto = 0; }, { passive: true });
+  addEventListener('touchmove', e => {
+    if (!touching) return; const p = e.touches[0];
+    nudge((p.clientX - tx) / innerWidth * 1.3 + (ty - p.clientY) / innerHeight * 1.3);
+    tx = p.clientX; ty = p.clientY;
+  }, { passive: true });
+  addEventListener('touchend', () => {
+    if (!touching) return; touching = false;
+    if (Math.hypot(tx - sx0, ty - sy0) < 10) { lastInput = performance.now(); auto = 0; target = t < .5 ? 1 : 0; }   // a tap flips day ⇄ night
+  }, { passive: true });
+  addEventListener('keydown', e => { if (e.key === 'ArrowRight' || e.key === 'ArrowDown') nudge(.12); if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') nudge(-.12); });
+
   document.querySelectorAll('.door').forEach(d => {
     const go = () => { lastInput = performance.now() + 2e3; target = +d.dataset.side; };
     d.addEventListener('pointerenter', go); d.addEventListener('focus', go);

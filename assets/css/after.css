@@ -39,8 +39,8 @@ body.after main { padding-top: 120px; }
 .tile { flex: var(--ar) 1 0; min-width: 0; display: block; color: inherit; }
 .tile .media { position: relative; aspect-ratio: var(--ar); border-radius: 12px; overflow: hidden; background: var(--bg, var(--night-raise)); isolation: isolate; }
 .tile .media img, .tile .media video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s var(--ease-out), opacity .6s; }
-.tile .media video { opacity: 0; }
-.tile:hover .media img, .tile:focus-visible .media img { transform: scale(1.035); }
+.tile .media video { opacity: 0; transition: opacity .7s var(--ease-out), transform 1.2s var(--ease-out); backface-visibility: hidden; transform: translateZ(0); }
+.tile:hover .media img, .tile:focus-visible .media img, .tile:hover .media video { transform: scale(1.035); }
 .tile.playing .media video { opacity: 1; }
 .tile .media::after { content: ""; position: absolute; inset: 0; border-radius: inherit; box-shadow: inset 0 0 0 1px rgba(255,255,255,.06); pointer-events: none; }
 .tile .cap { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 6px 14px; padding-top: 16px; }
@@ -48,7 +48,7 @@ body.after main { padding-top: 120px; }
 .tile .s { grid-column: 1 / -1; color: var(--night-ink-2); font-size: 15px; max-width: 52ch; }
 .tag { display: inline-flex; align-items: center; gap: 7px; height: 24px; padding: 0 10px; border-radius: 999px; border: 1px solid var(--night-line); font-family: var(--f-mono); font-size: 10px; letter-spacing: .04em; text-transform: uppercase; color: var(--night-ink-2); white-space: nowrap; }
 .tag.live::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: #5BE0A0; box-shadow: 0 0 8px #5BE0A0; }
-.tag.brief { border-color: color-mix(in srgb, var(--sun) 45%, var(--night-line)); color: #F3B596; }
+.tag.brief { border-color: color-mix(in srgb, var(--sun) 45%, var(--night-line)); color: #F6CD7A; }
 .tile .yr { font-family: var(--f-mono); font-size: 10.5px; letter-spacing: .03em; text-transform: uppercase; color: var(--night-ink-3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .tile .idx { position: absolute; left: 14px; top: 12px; z-index: 2; font-family: var(--f-mono); font-size: 10.5px; padding: 4px 7px; border-radius: 6px; background: rgba(13,12,17,.55); color: #EDE9F2; backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); opacity: 0; transform: translateY(-4px); transition: opacity .4s, transform .5s var(--ease-out); }
 .tile:hover .idx { opacity: 1; transform: none; }
@@ -70,7 +70,7 @@ body.after.has-cursor .tile { cursor: none; }
 .hello h2 { font-size: clamp(64px, 11vw, 180px); line-height: .9; letter-spacing: -.03em; }
 .hello-row { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 18px; }
 .foot { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; padding-block: 26px 34px; border-top: 1px solid var(--night-line); color: var(--night-ink-3); }
-.back-day { display: inline-flex; align-items: center; gap: 8px; color: var(--night-ink-2); transition: color .3s; }
+.back-day { min-height: 44px; display: inline-flex; align-items: center; gap: 8px; color: var(--night-ink-2); transition: color .3s; }
 .back-day i { display: inline-block; width: 16px; height: 16px; }
 .back-day:hover { color: var(--night-ink); }
 
@@ -88,3 +88,19 @@ body.after.has-cursor .tile { cursor: none; }
   .night-dial { display: none; }
   body.after main { padding-top: 96px; }
 }
+
+/* Dial caption always stays on one line */
+.night-dial figcaption { white-space: nowrap; }
+@media (max-width: 860px) { .night-dial { width: auto; } .night-dial svg { width: 150px; } }
+
+/* ---------- Groundwork (design courses) ---------- */
+.groundwork { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.5fr); gap: clamp(24px, 5vw, 80px); padding-top: clamp(90px, 11vw, 160px); }
+.gw-head .mono { color: var(--night-ink-2); }
+.gw-head h2 { font-size: clamp(36px, 4.4vw, 64px); line-height: 1; letter-spacing: -.02em; margin: 14px 0 16px; }
+.gw-intro { color: var(--night-ink-2); max-width: 40ch; font-size: 16px; }
+.gw-list { border-top: 1px solid var(--night-line); align-self: end; }
+.gw-list li { display: flex; justify-content: space-between; gap: 20px; padding: 15px 0; border-bottom: 1px solid var(--night-line); }
+.gw-t { display: grid; gap: 4px; font-size: 17px; }
+.gw-n { color: var(--night-ink-3); font-size: 13.5px; line-height: 1.45; }
+.gw-list .mono { color: var(--night-ink-3); padding-top: 4px; }
+@media (max-width: 860px) { .groundwork { grid-template-columns: 1fr; } }

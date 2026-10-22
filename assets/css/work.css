@@ -1,5 +1,5 @@
 /* ==========================================================================
-   WORK ("/work/") — the 9-to-5 résumé. Daylight theme only.
+   WORK ("/work/") — the 9-to-5 Resume. Daylight theme only.
    ========================================================================== */
 body.work main { padding-top: 120px; }
 .hide-s { display: inline; }
@@ -37,7 +37,7 @@ body.work main { padding-top: 120px; }
 .fact { padding: 26px 22px 24px 0; display: grid; gap: 8px; align-content: start; }
 .fact + .fact { padding-left: 22px; border-left: 1px solid var(--day-line); }
 .fact .v { font-family: var(--f-display); font-size: clamp(54px, 6.6vw, 104px); line-height: .9; letter-spacing: -.03em; font-variant-numeric: tabular-nums; }
-.fact .v sup { font-size: .42em; vertical-align: .9em; margin-left: .04em; color: var(--sun); }
+.fact .v sup { font-size: .42em; vertical-align: .9em; margin-left: .04em; color: var(--sun-ink); }
 .fact .l { color: var(--day-ink-2); font-size: 14.5px; max-width: 22ch; line-height: 1.4; }
 
 /* ---------- Timesheet rows ---------- */
@@ -60,7 +60,8 @@ body.work main { padding-top: 120px; }
 .job li::before { content: ""; position: absolute; left: 0; top: .78em; width: 12px; height: 1px; background: var(--day-ink-3); transition: width .5s var(--ease-out), background-color .3s; }
 .job li:hover::before { width: 18px; background: var(--sun); }
 .job li b { font-weight: 650; color: var(--day-ink); }
-.job .now { display: inline-flex; align-items: center; gap: 7px; color: var(--sun); }
+.job .now { display: inline-flex; align-items: center; gap: 7px; color: var(--sun-ink); }
+.job .now::before { background: var(--sun) !important; }
 .job .now::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: currentColor; animation: pulse 2s infinite; }
 @keyframes pulse { 50% { opacity: .25; } }
 
@@ -82,8 +83,8 @@ body.work main { padding-top: 120px; }
 .cta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
 
 /* ---------- 17:00 strip: the single door to the after-hours side ---------- */
-.dusk { display: block; margin-top: clamp(60px, 8vw, 120px); color: #FBF3EA; background: linear-gradient(100deg, #2B2338 0%, #5A3F5E 38%, #C4613A 78%, #E8541E 100%); position: relative; overflow: hidden; }
-.dusk::after { content: ""; position: absolute; right: 8%; bottom: -120px; width: 240px; height: 240px; border-radius: 50%; background: radial-gradient(circle at 40% 35%, #FF9A62, var(--sun) 60%, #B83A10); transition: transform 1.2s var(--ease-out); }
+.dusk { display: block; margin-top: clamp(60px, 8vw, 120px); color: #FBF3EA; background: linear-gradient(100deg, #221F35 0%, #4A3A5A 40%, #B9792A 80%, #F2A516 100%); position: relative; overflow: hidden; }
+.dusk::after { content: ""; position: absolute; right: 8%; bottom: -120px; width: 240px; height: 240px; border-radius: 50%; background: radial-gradient(circle at 40% 35%, #FFD877, var(--sun) 60%, #C27606); transition: transform 1.2s var(--ease-out); }
 .dusk:hover::after { transform: translateY(70px); }
 .dusk-in { position: relative; z-index: 1; display: grid; gap: 14px; padding-block: clamp(48px, 7vw, 92px); }
 .dusk .mono { color: rgba(251,243,234,.7); }
@@ -131,3 +132,17 @@ body.work main { padding-top: 120px; }
   body { background: #fff; }
   .rv, .lines .ln > span { opacity: 1 !important; transform: none !important; }
 }
+
+/* Dial caption always stays on one line */
+.hero-dial figcaption { white-space: nowrap; }
+@media (max-width: 1000px) { .hero-dial { width: auto; } .hero-dial svg { width: 170px; } }
+@media (max-width: 400px) { .hero-dial svg { width: 140px; } .hero-dial figcaption { font-size: 10.5px; } }
+
+/* Continued learning (LinkedIn Learning) under Education */
+.learn { margin-top: clamp(30px, 4vw, 48px); }
+.learn h3 { color: var(--day-ink-2); margin-bottom: 12px; }
+.learn ul { border-top: 1px solid var(--day-line); columns: 2; column-gap: clamp(20px, 3vw, 48px); }
+.learn li { break-inside: avoid; display: flex; justify-content: space-between; gap: 16px; padding: 11px 0; border-bottom: 1px solid var(--day-line); font-size: 15px; line-height: 1.4; }
+.learn li em { font-style: normal; color: var(--day-ink-3); font-size: 13px; }
+.learn li .mono { color: var(--day-ink-3); padding-top: 2px; }
+@media (max-width: 860px) { .learn ul { columns: 1; } }

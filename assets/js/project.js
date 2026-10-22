@@ -33,6 +33,9 @@
       return `<figure class="b b-img fit-wide rv"><div class="wrap"><div class="shot vid">${b.frame === 'browser' ? browser(v) : v}<button class="mono vbtn" type="button" aria-label="Pause video">Pause</button></div>${b.cap ? `<figcaption class="mono">${esc(b.cap)}</figcaption>` : ''}</div></figure>`;
     },
     grid: b => `<section class="b b-grid wrap cols-${b.cols || 2}">${b.items.map((it, i) => `<figure class="rv" style="--d:${(i % (b.cols || 2)) * .08}s"><div class="shot">${b.frame === 'browser' ? browser(img(it.src, it.alt, 'data-zoom')) : img(it.src, it.alt, 'data-zoom')}</div>${it.cap ? `<figcaption class="mono">${esc(it.cap)}</figcaption>` : ''}</figure>`).join('')}</section>`,
+    compare: b => `<section class="b b-compare wrap"><div class="cmp-head"><h2 class="display rv">${esc(b.h)}</h2>${b.p ? `<p class="rv" style="--d:.1s">${esc(b.p)}</p>` : ''}</div>
+      <div class="cmp rv" style="--d:.15s"><div class="cmp-row cmp-labels mono"><span>${esc(b.left || 'Before')}</span><span>${esc(b.right || 'After')}</span></div>
+      ${b.rows.map(([l, r], i) => `<div class="cmp-row"><div class="cmp-l"><span class="mono n">${String(i + 1).padStart(2, '0')}</span><p>${esc(l)}</p></div><div class="cmp-r"><p>${esc(r)}</p></div></div>`).join('')}</div></section>`,
     phones: b => `<section class="b b-phones">${b.h ? `<div class="wrap"><h2 class="mono ph-h rv">${esc(b.h)} <span>${String(b.items.length).padStart(2, '0')} screens · drag</span></h2></div>` : ''}<div class="rail rv" tabindex="0" aria-label="${esc(b.h || 'Screens')}, scroll sideways"><div class="rail-in">${b.items.map(it => `<figure class="phone-f"><div class="phone">${img(it.src, it.cap)}</div><figcaption class="mono">${esc(it.cap)}</figcaption></figure>`).join('')}</div></div></section>`
   };
 
@@ -67,6 +70,7 @@
     <div class="p-next-img"><img src="../../assets/projects/${next.id}/${esc(next.cover)}" alt="" loading="lazy"></div>
   </a>`;
 
+  main.style.setProperty('--accent', P.accent || 'var(--moon)');
   HV.initIcons(main);
   document.getElementById('yr').textContent = new Date().getFullYear();
 
@@ -76,7 +80,7 @@
     if (e.isIntersecting) { if (!v.src) v.src = v.dataset.src; if (!v.dataset.user && !HV.reduce) v.play().catch(() => {}); }
     else v.pause();
   }), { rootMargin: '200px 0px', threshold: .25 });
-  main.querySelectorAll('video').forEach(v => vio.observe(v));
+  main.querySelectorAll('video').forEach(v => { vio.observe(v); v.addEventListener('canplay', () => v.closest('.vid').classList.add('ready'), { once: true }); });
   main.querySelectorAll('.vbtn').forEach(b => b.addEventListener('click', () => {
     const v = b.parentElement.querySelector('video');
     if (v.paused) { v.play(); delete v.dataset.user; b.textContent = 'Pause'; } else { v.pause(); v.dataset.user = '1'; b.textContent = 'Play'; }
@@ -99,12 +103,14 @@
 
   // ---- Hero cover: gentle parallax ----
   const cover = main.querySelector('.p-cover img');
-  if (!HV.reduce) addEventListener('scroll', () => { const y = Math.min(scrollY, 900); cover.style.transform = `translateY(${y * .06}px) scale(${1 + y * .00008})`; }, { passive: true });
+  // starts slightly zoomed so the drift never uncovers an edge
+  const drift = () => { const room = cover.offsetHeight * .04, y = Math.min(scrollY * .05, room); cover.style.transform = `translateY(${(y - room / 2).toFixed(1)}px) scale(1.09)`; };
+  if (!HV.reduce) { addEventListener('scroll', drift, { passive: true }); drift(); }
 
   // ---- Lightbox for any zoomable image ----
   const lb = document.getElementById('lightbox'), lbImg = lb.querySelector('img');
   main.addEventListener('click', e => {
-    const im = e.target.closest('img[data-zoom]'); if (!im) return;
+    const im = e.target.closest('img[data-zoom]'); if (!im || innerWidth < 700) return;
     lbImg.src = im.currentSrc || im.src; lbImg.alt = im.alt; lb.hidden = false; requestAnimationFrame(() => lb.classList.add('on'));
     document.documentElement.style.overflow = 'hidden';
   });

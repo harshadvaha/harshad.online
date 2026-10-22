@@ -51,7 +51,8 @@
 
   // ---- Education ----
   const E = R.education;
-  $('edu').innerHTML = `<div class="rv"><p class="deg">${esc(E.degree)}</p><p class="school">${esc(E.school)} · ${esc(E.place)}</p><p class="edu-note">${esc(E.note)}</p></div>`;
+  $('edu').innerHTML = `<div class="rv"><p class="deg">${esc(E.degree)}</p><p class="school">${esc(E.school)} · ${esc(E.place)}</p><p class="edu-note">${esc(E.note)}</p></div>` +
+    ((R.learning || []).length ? `<div class="learn rv" style="--d:.1s"><h3 class="mono">Continued learning · LinkedIn Learning</h3><ul>${R.learning.map(c => `<li><span>${esc(c.title)}${c.note ? ` <em>${esc(c.note)}</em>` : ''}</span><span class="mono">${esc(c.year)}</span></li>`).join('')}</ul></div>` : '');
 
   $('yr').textContent = new Date().getFullYear();
   const ist = $('ist'); const tick = () => ist.textContent = HV.istTime(); tick(); setInterval(tick, 15000);
@@ -69,10 +70,9 @@
     svg.innerHTML = h;
     const hg = $('hg'), mg = $('mg'), sg = $('sg');
     function set() {
-      const parts = new Intl.DateTimeFormat('en-GB', { timeZone: 'Asia/Kolkata', hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: false }).formatToParts(new Date());
-      const g = t => +parts.find(p => p.type === t).value; const H = g('hour') % 24, M = g('minute'), S = g('second');
+      const { H, M, S } = HV.istParts();
       hg.style.transform = `rotate(${(H % 12) * 30 + M * .5}deg)`; mg.style.transform = `rotate(${M * 6 + S * .1}deg)`; sg.style.transform = `rotate(${S * 6}deg)`;
-      $('dial-time').textContent = `${String(H).padStart(2, '0')}:${String(M).padStart(2, '0')}`;
+      $('dial-time').textContent = HV.t12(H, M);
       $('dial-state').textContent = H >= 9 && H < 17 ? 'On the clock' : 'After hours';
     }
     set(); setInterval(set, 1000);
@@ -104,8 +104,8 @@
       const h = 9 + 8 * p;
       hand.setAttribute('transform', `rotate(${ang(h)} 32 32)`);
       const hh = Math.floor(h), mm = Math.floor((h - hh) * 60 / 5) * 5;
-      read.textContent = `${String(hh).padStart(2, '0')}:${String(mm).padStart(2, '0')}`;
-      dial.classList.toggle('show', scrollY > innerHeight * .5);
+      read.textContent = HV.t12(hh, mm);
+      dial.classList.toggle('show', scrollY > innerHeight * .5 && max - scrollY > 140);   // hide over the footer
       ticking = false;
     });
   }
