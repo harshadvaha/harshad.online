@@ -13,7 +13,7 @@
   $('meta').innerHTML = [
     ['Now', `${esc(cur.role)}, ${esc(cur.company)}`],
     ['Focus', esc(R.headline)],
-    ['Based', esc(R.location)]
+    ['Based', esc(R.location.replace(/\s*·\s*Remote/i, ''))]
   ].map(([k, v]) => `<div><dt>${k}</dt><dd>${v}</dd></div>`).join('');
 
   // ---- Links ----

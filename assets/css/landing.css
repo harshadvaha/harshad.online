@@ -1,3 +1,4 @@
+@font-face { font-family: "Gloock"; src: url("../fonts/gloock-latin-400-normal.woff2") format("woff2"); font-weight: 400; font-display: swap; }
 /* ==========================================================================
    LANDING ("/") — day/night sky with swapping digits.
    Colours are CSS variables written every frame by landing.js:
@@ -30,7 +31,7 @@ body.landing {
 
 /* ---------- Digits ---------- */
 .stage { position: fixed; inset: 0; z-index: 2; pointer-events: none; }
-.digits { position: absolute; left: 50%; bottom: calc(100svh - var(--hzY)); translate: -50% 0; display: flex; align-items: baseline; font-family: var(--f-display); font-size: var(--ds); line-height: .74; color: var(--ink); white-space: nowrap; }
+.digits { position: absolute; left: 50%; bottom: calc(100svh - var(--hzY)); translate: -50% 0; display: flex; align-items: baseline; font-family: "Gloock", var(--f-display); font-size: var(--ds); line-height: .74; color: var(--ink); white-space: nowrap; }
 .digits .dg { display: inline-block; width: .66em; text-align: center; will-change: transform; }
 .digits .to { font-size: .16em; font-style: italic; margin: 0 .5em; translate: 0 -.9em; letter-spacing: .02em; color: var(--ink2); }
 .digits.mirror { bottom: auto; top: var(--hzY); align-items: flex-start; transform: scaleY(-1); transform-origin: 50% 50%; opacity: .13; z-index: 1; filter: blur(1.5px); -webkit-mask: linear-gradient(0deg, #000 30%, transparent 85%); mask: linear-gradient(0deg, #000 30%, transparent 85%); }

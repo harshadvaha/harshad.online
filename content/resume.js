@@ -66,7 +66,7 @@ window.RESUME = {
   skills: [
     { group: "Pricing & RGM", items: ["Pricing Strategy", "Price Elasticity Analysis", "Promotion Optimization & Promo ROI", "Price Pack Architecture (PPA)", "Mix Management", "Trade Investment", "Margin & Profitability Analysis", "Competitive & Private Label Pricing", "Scenario Simulation", "Modern & Traditional Trade"] },
     { group: "Analytics & BI", items: ["Power BI", "Advanced Excel (Scenario Analysis)", "Statistical Regression Modelling", "Sales Decomposition", "Retail POS Data", "NIQ Revenue Management Optimization Tools"] },
-    { group: "AI in the workflow", items: ["Claude, ChatGPT, Gemini", "AI-assisted Python & SQL", "AI-assisted data checks"] },
+    { group: "AI in the workflow", items: ["Claude, ChatGPT, Gemini", "AI-assisted Python & SQL", "AI automation & copilot agents"] },
     { group: "Working with people", items: ["Client Advisory & Data Storytelling", "Stakeholder Management", "Cross-functional Collaboration", "Tool Adoption"] }
   ],
 

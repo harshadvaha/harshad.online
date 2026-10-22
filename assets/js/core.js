@@ -60,6 +60,14 @@
     const bar = document.querySelector('.topbar'); if (!bar) return;
     const on = () => bar.classList.toggle('scrolled', scrollY > 24);
     addEventListener('scroll', on, { passive: true }); on();
+    // When scrolling stops, the main button gives one soft "island" stretch (at most every 5 s)
+    const cta = bar.querySelector('.btn.solid'); if (!cta || reduce) return;
+    let tm, last = 0;
+    addEventListener('scroll', () => { clearTimeout(tm); tm = setTimeout(() => {
+      const now = Date.now(); if (now - last < 5000 || scrollY < 40) return; last = now;
+      cta.classList.remove('pulse'); void cta.offsetWidth; cta.classList.add('pulse');
+    }, 220); }, { passive: true });
+    cta.addEventListener('animationend', e => { if (e.animationName === 'island-pulse') cta.classList.remove('pulse'); });
   }
 
   // Veil transition between the two sides: a circle of the destination colour grows from the click.
