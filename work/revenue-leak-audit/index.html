@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Revenue Leak Audit · Harshad Vaghasiya</title>
+  <meta name="description" content="A pricing case study on two years of public online-store order data: where revenue leaks between full price and the bank, and what to do about it.">
+  <meta name="theme-color" content="#ECE9E1">
+  <meta property="og:title" content="Revenue Leak Audit · Harshad Vaghasiya">
+  <meta property="og:description" content="12p of every £1 at full price never reached the bank. A pricing case study on public order data.">
+  <meta property="og:image" content="https://harshad.online/assets/case/rla/dash-overview.webp">
+  <link rel="icon" href="../../assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="../../assets/fonts/young-serif-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../../assets/css/base.css">
+  <link rel="stylesheet" href="../../assets/css/charts.css">
+  <link rel="stylesheet" href="../../assets/css/case.css">
+</head>
+<!--
+  CASE STUDY (/work/revenue-leak-audit/) — personal project on the 9 to 5 side.
+  Figures: /content/case-rla.js (computed from the public dataset).
+  Charts: /assets/js/charts.js · Page logic: /assets/js/case.js
+-->
+<body class="day case">
+  <header class="topbar">
+    <a class="home" href="../" aria-label="Back to Resume"><i class="back" data-icon="back"></i>Resume</a>
+    <div class="actions">
+      <a class="btn solid" href="https://www.linkedin.com/in/harshadvaha" target="_blank" rel="noopener"><span data-icon="linkedin"></span>Connect</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="c-hero wrap">
+      <p class="mono c-eye rv"><span class="pill">Personal project</span><span>Pricing case study</span></p>
+      <h1 class="display c-title lines">Revenue Leak Audit</h1>
+      <p class="c-sub rv" style="--d:.2s">What an online store’s own order data says about its prices, deals and range.</p>
+      <div class="c-cover rv" style="--d:.3s">
+        <div class="frame-browser"><div class="bar"><i></i><i></i><i></i></div><img src="../../assets/case/rla/dash-overview.webp" alt="Dashboard overview: revenue, discounts and price realisation by month" fetchpriority="high" data-zoom></div>
+      </div>
+    </section>
+
+    <section class="c-intro wrap">
+      <p class="lead rv">Most pricing work starts with retailer data that smaller brands never see. This project asks a simpler question: what can a brand that sells online learn from the one dataset it always has, its own order export? Using two years of public orders from a UK online store, it traces where money leaks between the full price and the revenue that actually reaches the bank.</p>
+      <dl class="c-facts rv" style="--d:.12s">
+        <div><dt class="mono">Data</dt><dd>UCI Online Retail II, a public dataset</dd></div>
+        <div><dt class="mono">Scale</dt><dd>About 1 million order lines over two years</dd></div>
+        <div><dt class="mono">Analyses</dt><dd>Price waterfall, revenue bridge, deal payback, customer segments, range</dd></div>
+        <div><dt class="mono">Built with</dt><dd>Python, Looker Studio, AI-assisted analysis</dd></div>
+      </dl>
+    </section>
+
+    <div class="wrap"><div class="c-sec-h rv"><h2 class="mono">Five findings</h2><span class="mono">Year 2 unless noted</span></div></div>
+    <div class="wrap" id="findings"></div>
+
+    <section class="dash wrap">
+      <div class="c-sec-h rv" style="padding-top:0;margin-bottom:28px"><h2 class="mono">The dashboard</h2><span class="mono">3 views</span></div>
+      <p class="lead2 rv">The same numbers, laid out as a dashboard a brand team could open every month and filter by year and channel.</p>
+      <div class="dash-grid">
+        <figure class="rv"><div class="frame-browser"><div class="bar"><i></i><i></i><i></i></div><img src="../../assets/case/rla/dash-leaks.webp" alt="Dashboard view: price waterfall and revenue bridge" loading="lazy" data-zoom></div><figcaption class="mono">Leaks: the price waterfall next to the revenue bridge</figcaption></figure>
+        <figure class="rv"><div class="frame-browser"><div class="bar"><i></i><i></i><i></i></div><img src="../../assets/case/rla/dash-deals.webp" alt="Dashboard view: deal payback by discount depth" loading="lazy" data-zoom></div><figcaption class="mono">Deals: payback by discount depth</figcaption></figure>
+        <figure class="rv" style="--d:.08s"><div class="frame-browser"><div class="bar"><i></i><i></i><i></i></div><img src="../../assets/case/rla/dash-customers.webp" alt="Dashboard view: customers and range" loading="lazy" data-zoom></div><figcaption class="mono">Customers and range</figcaption></figure>
+      </div>
+    </section>
+
+    <section class="wrap">
+      <div class="c-sec-h rv" style="padding-top:20px"><h2 class="mono">How it was built</h2><span class="mono">04 steps</span></div>
+      <ol class="steps rv" style="--d:.1s">
+        <li><span class="mono">01</span><h3>Clean</h3><p>About a million order lines sorted into sales, returns, cancellations, free items and fees.</p></li>
+        <li><span class="mono">02</span><h3>Set the full price</h3><p>A full price for every product, channel and quarter, so each discount could be measured against it.</p></li>
+        <li><span class="mono">03</span><h3>Analyse</h3><p>Five standard pricing views: waterfall, revenue bridge, deal payback, customer segments and range.</p></li>
+        <li><span class="mono">04</span><h3>Present</h3><p>A Looker Studio dashboard and a short, plain-language read-out of what to do next.</p></li>
+      </ol>
+      <p class="ai-note rv"><span class="mono">AI</span><span>AI assistants wrote first drafts of the cleaning and analysis code and the chart layouts. The judgement calls, like what counts as full price and which leaks matter, were mine, and every figure was checked against the data.</span></p>
+    </section>
+
+    <section class="care wrap">
+      <h2 class="display rv">Read with care</h2>
+      <div class="rv" style="--d:.1s">
+        <ul>
+          <li>The store sells gifts and homeware, and many of its customers are small shops buying in bulk. Some patterns would differ for a consumer brand.</li>
+          <li>The data has no promotion calendar. “Deals” are weeks where a product’s price dropped below its usual level, so deal payback is an observed pattern, not a tested result.</li>
+          <li>Figures are in pounds sterling, as recorded in the source data.</li>
+        </ul>
+        <p class="src">Source: <a href="https://archive.ics.uci.edu/dataset/502/online+retail+ii" target="_blank" rel="noopener">Online Retail II, UCI Machine Learning Repository</a> (CC BY 4.0).</p>
+      </div>
+    </section>
+
+    <section class="c-end"><a class="wrap" href="../"><span class="mono">Back to</span><span class="display"><i data-icon="back"></i>Resume</span></a></section>
+  </main>
+
+  <footer class="foot wrap">
+    <span class="mono">© <span id="yr"></span> Harshad Vaghasiya</span>
+    <span class="mono">Personal project</span>
+  </footer>
+
+  <div class="lightbox" id="lightbox" hidden><img alt=""></div>
+  <div class="grain" aria-hidden="true"></div>
+  <script src="../../content/case-rla.js"></script>
+  <script src="../../assets/js/core.js"></script>
+  <script src="../../assets/js/charts.js"></script>
+  <script src="../../assets/js/case.js"></script>
+</body>
+</html>
