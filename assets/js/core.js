@@ -59,7 +59,6 @@
   function initTopbar() {
     const bar = document.querySelector('.topbar'); if (!bar) return;
     bar.insertAdjacentHTML('afterbegin', '<div class="tb-bg" aria-hidden="true"></div>');
-    liquid(bar);
     const on = () => bar.classList.toggle('scrolled', scrollY > 24);
     addEventListener('scroll', on, { passive: true }); on();
     // When scrolling stops, the main button gives one soft "island" stretch (at most every 5 s)
@@ -72,40 +71,6 @@
     cta.addEventListener('animationend', e => { if (e.animationName === 'island-pulse') cta.classList.remove('pulse'); });
   }
 
-  // ---- Liquid bar: a damped spring fed by scroll velocity ----
-  function liquid(bar) {
-    const bg = bar.querySelector('.tb-bg');
-    const kids = [...bar.children].filter(n => n !== bg);
-    if (reduce) return;
-    let y = -64, v = 0, lastY = scrollY, lastT = performance.now(), running = false, wasTop = scrollY <= 24;
-    const K = 210, C = 15;                       // stiffness, damping: one soft overshoot, then still
-    function frame(now) {
-      const dt = Math.min(.033, (now - lastT) / 1000); lastT = now;
-      const d = scrollY - lastY; lastY = scrollY;
-      v += Math.max(-60, Math.min(60, d)) * 18;                                // scroll speed pushes the surface (down = drip, up = lift)
-      const top = scrollY <= 24;
-      if (top && !wasTop) v -= 520;              // reaching the top: the bar lifts, then lands like a drop
-      wasTop = top;
-      v += (-K * y - C * v) * dt; y += v * dt;
-      y = Math.max(-90, Math.min(70, y));
-      // the bar itself becomes a drop: it gathers in a little from the sides, rounds its lower
-      // corners and hangs lower, carrying its content with it; at the top (y < 0) it squashes, then rebounds
-      const p = Math.max(0, Math.min(1, y / 46));
-      const side = p * Math.min(14, innerWidth * .03), r = p * 30;
-      bg.style.clipPath = `inset(-200px ${side.toFixed(1)}px 0 ${side.toFixed(1)}px round 0 0 ${r.toFixed(1)}px ${r.toFixed(1)}px)`;
-      const sq = y < 0 ? Math.min(1, -y / 60) : 0;
-      bg.style.transform = `translate3d(0,${(y < 0 ? y * .4 : p * 6).toFixed(2)}px,0) scale(${(1 + sq * .02).toFixed(4)}, ${(1 + p * .12 - sq * .14).toFixed(4)})`;
-      kids.forEach(n => n.style.transform = `translate3d(0,${(y < 0 ? y * .5 : p * 7).toFixed(2)}px,0) scale(${(1 - p * .03).toFixed(4)})`);
-      if (Math.abs(y) < .05 && Math.abs(v) < .5 && d === 0) { y = 0; v = 0; running = false; kids.forEach(n => n.style.transform = ''); bg.style.transform = ''; bg.style.clipPath = ''; return; }
-      requestAnimationFrame(frame);
-    }
-    const wake = () => { if (!running) { running = true; lastT = performance.now(); requestAnimationFrame(frame); } };
-    const size = () => bar.style.setProperty('--dw', Math.round(Math.min(620, innerWidth * .62)) + 'px');
-    size(); addEventListener('resize', size);
-    addEventListener('scroll', wake, { passive: true });
-    wake();                                       // on arrival the bar falls in from above
-  }
-
   // ---- Back to top: appears once you scroll down, leaves when you are back at the top ----
   function initToTop() {
     if (!document.querySelector('.topbar')) return;
@@ -113,7 +78,7 @@
     document.body.appendChild(t);
     let last = scrollY;
     addEventListener('scroll', () => { const y = scrollY;
-      if (y < 60) t.classList.remove('on'); else if (y > last + 2 && y > 240) t.classList.add('on');
+      if (y < 80) t.classList.remove('on'); else if (y > last || y > 400) t.classList.add('on');
       last = y; }, { passive: true });
     t.addEventListener('click', () => scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' }));
   }

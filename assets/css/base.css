@@ -187,13 +187,13 @@ body.night .grain { opacity: .07; mix-blend-mode: screen; filter: invert(1); }
 @media (max-width: 560px) { .switch { padding-right: 6px; gap: 0; } .sw-text { display: none; } }
 @media print { .switch { display: none !important; } }
 
-/* ---------- Back to top (bottom centre) ---------- */
-.to-top { position: fixed; z-index: 59; left: 50%; bottom: max(22px, env(safe-area-inset-bottom)); width: 46px; height: 46px; margin-left: -23px; border-radius: 50%; display: grid; place-items: center;
-  opacity: 0; transform: translateY(24px) scale(.6); pointer-events: none; transition: opacity .35s, transform .6s cubic-bezier(.34, 1.56, .64, 1); }
+/* ---------- Back to top (bottom centre): small and quiet ---------- */
+.to-top { position: fixed; z-index: 59; left: 50%; bottom: max(18px, env(safe-area-inset-bottom)); width: 36px; height: 36px; margin-left: -18px; border-radius: 50%; display: grid; place-items: center;
+  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  opacity: 0; transform: translateY(12px); pointer-events: none; transition: opacity .4s, transform .5s var(--ease-out), border-color .3s, color .3s; }
 .to-top.on { opacity: 1; transform: none; pointer-events: auto; }
-.to-top svg { width: 20px; height: 20px; transition: transform .45s cubic-bezier(.34, 1.56, .64, 1); }
-body.day .to-top { background: var(--day-ink); color: var(--day-paper); box-shadow: 0 12px 28px -12px rgba(0,0,0,.5); }
-body.night .to-top { background: var(--night-ink); color: var(--night-bg); box-shadow: 0 12px 28px -10px rgba(0,0,0,.8); }
-@media (hover: hover) { .to-top:hover svg { transform: translateY(-3px); } }
-.to-top:active { transform: scale(.9); }
+.to-top svg { width: 16px; height: 16px; transition: transform .4s var(--ease-out); }
+body.day .to-top { color: var(--day-ink-2); border: 1px solid var(--day-line); background: color-mix(in srgb, var(--day-bg) 70%, transparent); }
+body.night .to-top { color: var(--night-ink-2); border: 1px solid var(--night-line); background: color-mix(in srgb, var(--night-bg) 70%, transparent); }
+@media (hover: hover) { .to-top:hover svg { transform: translateY(-2px); } body.day .to-top:hover { color: var(--day-ink); border-color: var(--day-ink-3); } body.night .to-top:hover { color: var(--night-ink); border-color: var(--night-ink-3); } }
 @media print { .to-top { display: none !important; } }
