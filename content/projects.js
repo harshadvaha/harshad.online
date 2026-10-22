@@ -51,7 +51,7 @@ window.PROJECTS = [
     sub: "Lyrics prompter web app",
     kind: "Live", cat: "Web app", year: "2026",
     bg: "#E9874E", tone: "dark", accent: "#FFE6C7",
-    cover: "cover.webp", tile: "tile.mp4", size: "",
+    cover: "cover.webp", thumb: "tile-poster.webp", tile: "tile.mp4", size: "",
     summary: "Karaoke-style lyrics that keep time with any music you play.",
     intro: "Sing Along is a lyrics prompter. It does not play music: people play a song on Spotify, YouTube or any speaker, and Sing Along shows the words line by line, in time. Small details make it useful for practice, like a \"Music\" cue during long intros and a button to replay the previous line.",
     facts: [["Type", "Web app"], ["Status", "Live"], ["Works on", "Phone & laptop browsers"], ["Year", "2026"]],

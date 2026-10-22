@@ -32,7 +32,7 @@
     return `<a class="tile rv" href="project/?p=${encodeURIComponent(p.id)}" style="--ar:${ar};--bg:${esc(p.bg)};--d:${(i % 3) * .08}s" data-id="${esc(p.id)}" aria-label="${esc(p.title)}, ${esc(p.sub)}">
       <div class="media">
         <span class="idx">${String(ALL.indexOf(p) + 1).padStart(2, '0')} / ${String(ALL.length).padStart(2, '0')}</span>
-        <img src="${media(p.id)}${esc(p.cover)}" alt="" loading="${i < 2 ? 'eager' : 'lazy'}" decoding="async">
+        <img src="${media(p.id)}${esc(p.thumb || p.cover)}" alt="" loading="${i < 2 ? 'eager' : 'lazy'}" decoding="async">
         ${p.tile ? `<video muted loop playsinline preload="none" data-src="${media(p.id)}${esc(p.tile)}"></video>` : ''}
       </div>
       <div class="cap">

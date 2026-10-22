@@ -67,7 +67,7 @@
       <span class="display p-next-t">${esc(next.title)} <i data-icon="arrow"></i></span>
       <span class="p-next-s">${esc(next.summary)}</span>
     </div>
-    <div class="p-next-img"><img src="../../assets/projects/${next.id}/${esc(next.cover)}" alt="" loading="lazy"></div>
+    <div class="p-next-img"><img src="../../assets/projects/${next.id}/${esc(next.thumb || next.cover)}" alt="" loading="lazy"></div>
   </a>`;
 
   main.style.setProperty('--accent', P.accent || 'var(--moon)');
