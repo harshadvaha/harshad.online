@@ -97,7 +97,7 @@ body.work main { padding-top: 120px; }
 .foot { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; padding-block: 26px 34px; color: var(--day-ink-2); }
 
 /* ---------- Workday dial (fixed, desktop) ---------- */
-.dial { position: fixed; z-index: 40; right: var(--gutter); bottom: 22px; display: flex; flex-direction: row-reverse; align-items: center; gap: 10px; opacity: 0; transform: translateY(10px); transition: opacity .6s, transform .6s var(--ease-out); }
+.dial { position: fixed; z-index: 40; left: var(--gutter); bottom: 22px; display: flex; flex-direction: row; align-items: center; gap: 10px; opacity: 0; transform: translateY(10px); transition: opacity .6s, transform .6s var(--ease-out); }
 .dial.show { opacity: 1; transform: none; }
 .dial svg { width: 54px; height: 54px; }
 .dial .face { fill: var(--day-paper); stroke: var(--day-line); }

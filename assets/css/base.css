@@ -76,9 +76,18 @@ body.night { background: var(--night-bg); color: var(--night-ink); color-scheme:
 .topbar .home { min-height: 44px; display: inline-flex; align-items: center; gap: 10px; font-weight: 600; font-size: 15px; letter-spacing: -.01em; }
 .topbar .home .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--sun); box-shadow: 0 0 0 4px color-mix(in srgb, var(--sun) 22%, transparent); }
 .topbar .actions { display: flex; align-items: center; gap: 8px; }
-.topbar.scrolled { backdrop-filter: blur(14px) saturate(1.2); -webkit-backdrop-filter: blur(14px) saturate(1.2); }
-body.day .topbar.scrolled { background: color-mix(in srgb, var(--day-bg) 94%, transparent); box-shadow: 0 1px 0 var(--day-line); }
-body.night .topbar.scrolled { background: color-mix(in srgb, var(--night-bg) 92%, transparent); box-shadow: 0 1px 0 var(--night-line); }
+/* Liquid top bar. The surface (.tb-bg) and its drop (.tb-drop) are driven by a spring in core.js:
+   scrolling down pulls a drop out of the bar's lower edge, stopping lets it snap back with a wobble,
+   arriving at the top makes the bar land like a falling drop. Content never distorts, only the surface. */
+.topbar { --tb: transparent; --tb-line: transparent; }
+body.day .topbar { --tb: color-mix(in srgb, var(--day-bg) 95%, transparent); --tb-solid: var(--day-bg); --tb-line: var(--day-line); }
+body.night .topbar { --tb: color-mix(in srgb, var(--night-bg) 93%, transparent); --tb-solid: var(--night-bg); --tb-line: var(--night-line); }
+.tb-bg { position: absolute; inset: 0; z-index: -1; pointer-events: none; opacity: 0; transition: opacity .45s var(--ease-out); transform-origin: 50% 0; }
+/* the surface also reaches far above the bar, so no page content ever shows through the status-bar area (iOS) */
+.tb-bg::before { content: ""; position: absolute; left: 0; right: 0; bottom: 0; top: -200px; background: var(--tb-solid); backdrop-filter: blur(14px) saturate(1.2); -webkit-backdrop-filter: blur(14px) saturate(1.2); box-shadow: 0 1px 0 var(--tb-line); }
+.tb-drop { position: absolute; left: 50%; top: calc(100% - 10px); width: var(--dw, 60vw); height: 34px; z-index: 1; margin-left: calc(var(--dw, 60vw) / -2); background: var(--tb-solid); border-radius: 0 0 50% 50% / 0 0 100% 100%; box-shadow: 0 1px 0 var(--tb-line); transform-origin: 50% 0; transform: scaleY(0); }
+.topbar.scrolled .tb-bg { opacity: 1; }
+.topbar > .tb-bg { pointer-events: none; }
 
 /* ---------- Buttons ---------- */
 .btn { display: inline-flex; align-items: center; gap: 9px; height: 40px; padding: 0 16px; border-radius: 999px; font-size: 14px; font-weight: 600; letter-spacing: -.005em; white-space: nowrap; transition: transform .35s var(--ease-out), background-color .25s, color .25s, border-color .25s; }
@@ -144,3 +153,35 @@ body.night .grain { opacity: .07; mix-blend-mode: screen; filter: invert(1); }
 @keyframes island-sweep { to { transform: translateX(120%); } }
 @media (hover: hover) { .topbar .btn.solid:hover { padding-inline: 21px; transform: scale(1.03); } }
 @media (prefers-reduced-motion: reduce) { .topbar .btn.solid, .topbar .btn.solid > * { animation: none !important; } }
+
+/* ---------- 9–5 ⇄ 5–9 switch (bottom right, every inner page) ----------
+   A disc that is half sun, half moon. It rolls the other way on hover, and opens into a pill
+   that names the other side. On touch it stays a compact pill. */
+.switch { position: fixed; z-index: 60; right: max(var(--gutter), env(safe-area-inset-right)); bottom: max(20px, env(safe-area-inset-bottom)); display: flex; align-items: center; gap: 0; height: 52px; padding: 6px; border-radius: 999px;
+  opacity: 0; transform: translateY(18px) scale(.9); pointer-events: none;
+  transition: opacity .5s var(--ease-out), transform .7s cubic-bezier(.34, 1.56, .64, 1), gap .55s cubic-bezier(.34, 1.4, .64, 1), padding .55s cubic-bezier(.34, 1.4, .64, 1), box-shadow .4s; }
+.switch.on { opacity: 1; transform: none; pointer-events: auto; }
+.switch.to-night { background: #17151E; color: var(--night-ink); box-shadow: 0 14px 34px -14px rgba(13,12,17,.55), inset 0 0 0 1px rgba(255,255,255,.06); }
+.switch.to-day { background: var(--day-paper); color: var(--day-ink); box-shadow: 0 14px 34px -12px rgba(0,0,0,.6), inset 0 0 0 1px rgba(0,0,0,.06); }
+.sw-disc { position: relative; width: 40px; height: 40px; border-radius: 50%; overflow: hidden; flex: none; transition: transform .9s cubic-bezier(.34, 1.4, .64, 1); }
+.sw-disc i { position: absolute; inset: 0; border-radius: 50%; transition: transform .9s cubic-bezier(.65, 0, .35, 1); }
+.sw-sun { background: radial-gradient(circle at 38% 34%, #FFD877, var(--sun) 60%, #C27606); }
+.sw-moon { background: #0D0C11; }
+.sw-moon::after { content: ""; position: absolute; inset: 9px; border-radius: 50%; background: var(--moon); -webkit-mask: radial-gradient(circle at 70% 32%, transparent 44%, #000 45%); mask: radial-gradient(circle at 70% 32%, transparent 44%, #000 45%); }
+/* the destination side waits just off the disc and rolls in on hover */
+.switch.to-night .sw-sun { transform: none; } .switch.to-night .sw-moon { transform: translateX(105%); }
+.switch.to-day .sw-moon { transform: none; } .switch.to-day .sw-sun { transform: translateX(-105%); }
+.sw-text { display: flex; align-items: baseline; gap: 8px; white-space: nowrap; padding-right: 6px; line-height: 1; }
+.sw-text b { font-family: var(--f-mono); font-size: 12px; font-weight: 500; letter-spacing: .04em; }
+.sw-text span { display: inline-block; max-width: 0; overflow: hidden; opacity: 0; font-size: 14px; font-weight: 600; transition: max-width .6s cubic-bezier(.34, 1.3, .64, 1), opacity .35s; }
+.switch { gap: 10px; padding-right: 14px; }
+/* at rest the disc shows where you'll go */
+.switch.to-night .sw-sun { transform: translateX(-105%); } .switch.to-night .sw-moon { transform: none; }
+.switch.to-day .sw-moon { transform: translateX(105%); } .switch.to-day .sw-sun { transform: none; }
+@media (hover: hover) {
+  .switch:hover { padding-right: 18px; }
+  .switch:hover .sw-text span { max-width: 140px; opacity: .7; }
+  .switch:hover .sw-disc { transform: rotate(-24deg) scale(1.04); }
+}
+.switch:active .sw-disc { transform: rotate(-30deg) scale(.92); }
+@media print { .switch { display: none !important; } }

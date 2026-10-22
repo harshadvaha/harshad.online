@@ -58,6 +58,8 @@
 
   function initTopbar() {
     const bar = document.querySelector('.topbar'); if (!bar) return;
+    bar.insertAdjacentHTML('afterbegin', '<div class="tb-bg" aria-hidden="true"><div class="tb-drop"></div></div>');
+    liquid(bar);
     const on = () => bar.classList.toggle('scrolled', scrollY > 24);
     addEventListener('scroll', on, { passive: true }); on();
     // When scrolling stops, the main button gives one soft "island" stretch (at most every 5 s)
@@ -68,6 +70,54 @@
       cta.classList.remove('pulse'); void cta.offsetWidth; cta.classList.add('pulse');
     }, 220); }, { passive: true });
     cta.addEventListener('animationend', e => { if (e.animationName === 'island-pulse') cta.classList.remove('pulse'); });
+  }
+
+  // ---- Liquid bar: a damped spring fed by scroll velocity ----
+  function liquid(bar) {
+    const bg = bar.querySelector('.tb-bg'), drop = bar.querySelector('.tb-drop');
+    const kids = [...bar.children].filter(n => n !== bg);
+    if (reduce) return;
+    let y = -64, v = 0, lastY = scrollY, lastT = performance.now(), running = false, wasTop = scrollY <= 24;
+    const K = 210, C = 15;                       // stiffness, damping: one soft overshoot, then still
+    function frame(now) {
+      const dt = Math.min(.033, (now - lastT) / 1000); lastT = now;
+      const d = scrollY - lastY; lastY = scrollY;
+      v += Math.max(-60, Math.min(60, d)) * 18;                                // scroll speed pushes the surface (down = drip, up = lift)
+      const top = scrollY <= 24;
+      if (top && !wasTop) v -= 520;              // reaching the top: the bar lifts, then lands like a drop
+      wasTop = top;
+      v += (-K * y - C * v) * dt; y += v * dt;
+      y = Math.max(-90, Math.min(70, y));
+      // content: only the gentle fall / lift, never stretched
+      const lift = y < 0 ? y * .5 : y * .08;
+      kids.forEach(n => n.style.transform = `translate3d(0,${lift.toFixed(2)}px,0)`);
+      // surface: squash and stretch
+      const s = Math.abs(y) / 100;
+      bg.style.transform = `translate3d(0,${(y < 0 ? y * .5 : 0).toFixed(2)}px,0) scale(${(1 + s * .015).toFixed(4)}, ${(1 + (y > 0 ? s * .25 : -s * .12)).toFixed(4)})`;
+      drop.style.transform = `scaleY(${y > 0 ? Math.min(1.1, y / 26).toFixed(3) : 0})`;
+      if (Math.abs(y) < .05 && Math.abs(v) < .5 && d === 0) { y = 0; v = 0; running = false; kids.forEach(n => n.style.transform = ''); bg.style.transform = ''; drop.style.transform = 'scaleY(0)'; return; }
+      requestAnimationFrame(frame);
+    }
+    const wake = () => { if (!running) { running = true; lastT = performance.now(); requestAnimationFrame(frame); } };
+    const size = () => bar.style.setProperty('--dw', Math.round(Math.min(620, innerWidth * .62)) + 'px');
+    size(); addEventListener('resize', size);
+    addEventListener('scroll', wake, { passive: true });
+    wake();                                       // on arrival the bar falls in from above
+  }
+
+  // ---- 9–5 / 5–9 switch: a small sun/moon disc, bottom right ----
+  function initSwitch() {
+    const b = document.body; let href, to, label, side;
+    if (b.classList.contains('work')) { href = '../after-hours/'; to = 'night'; label = 'After hours'; side = '5 to 9'; }
+    else if (b.classList.contains('after')) { href = '../work/'; to = 'day'; label = 'The day job'; side = '9 to 5'; }
+    else if (b.classList.contains('project')) { href = '../../work/'; to = 'day'; label = 'The day job'; side = '9 to 5'; }
+    else return;
+    const a = el(`<a class="switch to-${to}" href="${href}" data-go="${to}" aria-label="Switch to ${label} (${side})">
+      <span class="sw-disc" aria-hidden="true"><i class="sw-sun"></i><i class="sw-moon"></i></span>
+      <span class="sw-text"><b>${side}</b><span>${label}</span></span></a>`);
+    document.body.appendChild(a);
+    const show = () => a.classList.toggle('on', scrollY > innerHeight * .35 && (document.documentElement.scrollHeight - innerHeight - scrollY) > 160);
+    addEventListener('scroll', show, { passive: true }); show();
   }
 
   // Veil transition between the two sides: a circle of the destination colour grows from the click.
@@ -90,7 +140,7 @@
   function initIcons(root = document) { root.querySelectorAll('[data-icon]').forEach(n => { if (!n.firstElementChild) n.insertAdjacentHTML('afterbegin', ICONS[n.dataset.icon] || ''); }); }
 
   window.HV = { ICONS, esc, el, istTime, istParts, t12, initReveal, initIcons, reduce };
-  document.addEventListener('DOMContentLoaded', () => { initIcons(); initTopbar(); initVeil(); });
+  document.addEventListener('DOMContentLoaded', () => { initIcons(); initTopbar(); initSwitch(); initVeil(); });
   // Reveal after fonts load so line splitting measures real line breaks
   (document.fonts ? document.fonts.ready : Promise.resolve()).then(() => initReveal());
 })();
