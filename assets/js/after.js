@@ -118,7 +118,7 @@
   // ---- Design groundwork (courses), placed after the projects ----
   const L = window.DESIGN_LEARNING, gw = $('groundwork');
   if (L && gw) gw.innerHTML = `<div class="gw-head rv"><p class="mono">Groundwork · LinkedIn Learning</p><h2 class="display" id="gw-h">Where it started</h2><p class="gw-intro">${esc(L.intro)}</p></div>
-    <ol class="gw-list rv" style="--d:.1s">${L.items.map(c => `<li><span class="gw-t">${esc(c.title)}${c.note ? `<span class="gw-n">${esc(c.note)}</span>` : ''}</span><span class="mono">${esc(c.year)}</span></li>`).join('')}</ol>`;
+    <ol class="gw-list rv" style="--d:.1s">${L.items.map(c => `<li><span class="gw-t">${esc(c.title)}${c.note ? `<span class="gw-n">${esc(c.note)}</span>` : ''}</span></li>`).join('')}</ol>`;
 
   $('yr').textContent = new Date().getFullYear();
   render();

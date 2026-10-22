@@ -8,7 +8,7 @@ body.after main { padding-top: 120px; }
 .ah-hero { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: clamp(24px, 5vw, 80px); align-items: end; padding-bottom: clamp(48px, 6vw, 84px); }
 .eyebrow { display: inline-flex; align-items: center; gap: 10px; color: var(--night-ink-2); margin-bottom: 26px; }
 .eyebrow .tick { width: 22px; height: 1px; background: var(--moon); }
-.ah-title { font-size: clamp(52px, 8.4vw, 136px); line-height: .92; letter-spacing: -.025em; max-width: 11ch; }
+.ah-title { font-size: clamp(52px, 8.4vw, 136px); line-height: 1.02; letter-spacing: -.025em; max-width: 11ch; }
 .ah-sub { margin-top: 28px; max-width: 54ch; font-size: clamp(17px, 1.35vw, 20px); color: var(--night-ink-2); line-height: 1.55; }
 
 .night-dial { width: clamp(170px, 18vw, 250px); display: grid; gap: 14px; justify-items: center; }
@@ -67,7 +67,7 @@ body.after.has-cursor .tile { cursor: none; }
 /* ---------- Hello ---------- */
 .hello { padding-block: clamp(90px, 12vw, 180px) clamp(40px, 6vw, 80px); display: grid; gap: 18px; }
 .hello .mono { color: var(--night-ink-2); }
-.hello h2 { font-size: clamp(64px, 11vw, 180px); line-height: .9; letter-spacing: -.03em; }
+.hello h2 { font-size: clamp(64px, 11vw, 180px); line-height: 1.02; letter-spacing: -.03em; }
 .hello-row { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 18px; }
 .foot { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; padding-block: 26px 34px; border-top: 1px solid var(--night-line); color: var(--night-ink-3); }
 .back-day { min-height: 44px; display: inline-flex; align-items: center; gap: 8px; color: var(--night-ink-2); transition: color .3s; }

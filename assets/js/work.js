@@ -52,7 +52,7 @@
   // ---- Education ----
   const E = R.education;
   $('edu').innerHTML = `<div class="rv"><p class="deg">${esc(E.degree)}</p><p class="school">${esc(E.school)} · ${esc(E.place)}</p><p class="edu-note">${esc(E.note)}</p></div>` +
-    ((R.learning || []).length ? `<div class="learn rv" style="--d:.1s"><h3 class="mono">Continued learning · LinkedIn Learning</h3><ul>${R.learning.map(c => `<li><span>${esc(c.title)}${c.note ? ` <em>${esc(c.note)}</em>` : ''}</span><span class="mono">${esc(c.year)}</span></li>`).join('')}</ul></div>` : '');
+    ((R.learning || []).length ? `<div class="learn rv" style="--d:.1s"><h3 class="mono">Continued learning · LinkedIn Learning</h3><ul>${R.learning.map(c => `<li><span>${esc(c.title)}${c.note ? ` <em>${esc(c.note)}</em>` : ''}</span></li>`).join('')}</ul></div>` : '');
 
   $('yr').textContent = new Date().getFullYear();
   const ist = $('ist'); const tick = () => ist.textContent = HV.istTime(); tick(); setInterval(tick, 15000);

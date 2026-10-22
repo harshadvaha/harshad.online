@@ -27,6 +27,83 @@
    ========================================================================== */
 window.PROJECTS = [
   {
+    id: "plotform",
+    title: "Plotform",
+    sub: "Website for a house-planning brand",
+    kind: "Live", cat: "Web app", year: "2026",
+    bg: "#F3F0E9", tone: "light", accent: "#8A6A3B",
+    cover: "cover.webp", tile: "tile.mp4", size: "",
+    summary: "One scroll turns a hand sketch into a finished home.",
+    intro: "Plotform designs layout plans, 3D elevations and furnished interiors for Indian homes. Its website tells that story in a single scroll: a hand sketch becomes a measured plan, then a 3D plan, then furnished rooms, a tilted perspective and finally the lit elevation.",
+    facts: [["Type", "Website"], ["Status", "Live"], ["Pages", "Home, designs, guides, brief form"], ["Year", "2026"]],
+    links: [{ label: "Visit plotform.design", url: "https://plotform.design" }],
+    blocks: [
+      { t: "video", src: "scroll.mp4", poster: "scroll.webp", cap: "The home page, scrolled from top to bottom. The house is drawn live in the browser.", frame: "browser" },
+      { t: "list", h: "Six stages, one scroll", p: "Each stage answers one question a homeowner has, in the order they usually ask it:", items: ["Sketch: does it fit how we live?", "Floor plan: are the rooms the right size?", "3D plan: how does it feel at full height?", "Interiors: where does the furniture go?", "Perspective: how does it sit on the plot?", "Elevation: what will the street see?"] },
+      { t: "img", src: "designs.webp", alt: "Plotform designs page", cap: "Designs page: five concept homes from five regions", frame: "browser", fit: "wide" },
+      { t: "text", h: "Built to be found", p: ["Alongside the main pages there are plain-language guides for the searches people actually make, such as 30×40 plans, east-facing plans and Vastu layouts. A short brief form sends requirements straight to the team's inbox."] }
+    ]
+  },
+
+  {
+    id: "singalong",
+    title: "Sing Along",
+    sub: "Lyrics prompter web app",
+    kind: "Live", cat: "Web app", year: "2026",
+    bg: "#E9874E", tone: "dark", accent: "#FFE6C7",
+    cover: "cover.webp", tile: "tile.mp4", size: "",
+    summary: "Karaoke-style lyrics that keep time with any music you play.",
+    intro: "Sing Along is a lyrics prompter. It does not play music: people play a song on Spotify, YouTube or any speaker, and Sing Along shows the words line by line, in time. Small details make it useful for practice, like a \"Music\" cue during long intros and a button to replay the previous line.",
+    facts: [["Type", "Web app"], ["Status", "Live"], ["Works on", "Phone & laptop browsers"], ["Year", "2026"]],
+    links: [{ label: "Open Sing Along", url: "https://harshadvaha.github.io/Sing-Along/" }, { label: "Source on GitHub", url: "https://github.com/harshadvaha/Sing-Along" }],
+    blocks: [
+      { t: "video", src: "demo.mp4", poster: "demo.webp", cap: "The built-in demo tape, at real speed. The current line glows; the next one waits below.", frame: "browser" },
+      { t: "text", h: "Why it doesn't play music", p: ["Music apps already do that well. Sing Along only does the part they don't: big, readable lines in sync, a clear cue for when the vocals start, and quick rewind for the line you missed."] },
+      { t: "grid", cols: 2, frame: "browser", items: [
+        { src: "idle.webp", alt: "Sing Along start screen", cap: "Search for a song, or try the demo" },
+        { src: "night.webp", alt: "Sing Along night mode", cap: "Night mode" }
+      ] },
+      { t: "phones", h: "On the phone", items: [{ src: "m-idle.webp", cap: "Start" }, { src: "m-lyrics.webp", cap: "Singing" }] }
+    ]
+  },
+
+  {
+    id: "upi",
+    title: "UPI Home",
+    sub: "Payments app redesign",
+    kind: "Concept", cat: "Interface", year: "2026",
+    bg: "#0F5A44", tone: "dark", accent: "#9FE3C2",
+    cover: "cover.webp", size: "tall",
+    summary: "Putting the four things people do every day back on top.",
+    intro: "Home screens of popular UPI apps bury the few things people do daily (scan and pay, pay a contact, check balance, pay bills) under offers and cross-sell tiles. This concept strips the home back to those actions and walks through every key flow, across 17 screens.",
+    facts: [["Type", "UX concept"], ["Platform", "Mobile"], ["Screens", "17"], ["Year", "2026"]],
+    blocks: [
+      { t: "phones", h: "The core flows", items: [
+        { src: "s01.webp", cap: "Home" }, { src: "s02.webp", cap: "Scan & pay" }, { src: "s03.webp", cap: "Pay" }, { src: "s04.webp", cap: "Check balance" }, { src: "s09.webp", cap: "Bills & recharge" }
+      ] },
+      { t: "text", h: "The problem",
+        p: ["UPI handled 23.2 billion payments in May 2026, and two apps carry about four in five of them (NPCI data, via Inc42). For most people these apps are now as routine as a wallet, yet their home screens have grown into marketplaces for loans, insurance, rewards and shopping.",
+            "India's consumer regulator (CCPA) has listed disguised ads and interface interference among the dark patterns apps should avoid. This concept asks what a payments home looks like when it is built around the few things people open it for."] },
+      { t: "compare", h: "What's different from today's apps",
+        p: "Compared with the home screens of the most-used UPI apps in India:",
+        left: "Typical UPI app today", right: "This concept",
+        rows: [
+          ["The home screen opens on offers, rewards and loan or insurance banners. The four daily actions compete with a dozen other tiles.", "Scan, pay a contact, pay a UPI ID and transfer to your own account sit together at the top. Everything else is one level down."],
+          ["Checking balance is a separate trip: leave what you were doing, open another screen, enter the PIN.", "Balance is one tap from home and also shown inside the payment flow, so you know before you pay."],
+          ["Scratch cards and ads appear on balance and payment-success screens, right when you want to confirm the money moved.", "No ads on balance or confirmation screens. One clearly labelled sponsored slot on home, and nowhere else."],
+          ["Scanner controls sit near the top of the screen, out of thumb reach, and a QR code on a far wall is hard to read.", "Torch and zoom (1×, 2×, 4×) sit just under the scan frame, within reach of one thumb."],
+          ["Bills are filed by category, so you hunt for the one that is due.", "Bills and recharges are sorted by due date, so what is due soon is on top."]
+        ] },
+      { t: "phones", h: "Every other screen", items: [
+        { src: "s05.webp", cap: "To own account" }, { src: "s06.webp", cap: "UPI ID or number" }, { src: "s07.webp", cap: "Pay a contact" }, { src: "s08.webp", cap: "My QR" },
+        { src: "s10.webp", cap: "Electricity bill" }, { src: "s11.webp", cap: "Mobile recharge" }, { src: "s12.webp", cap: "Find your biller" }, { src: "s13.webp", cap: "History" },
+        { src: "s14.webp", cap: "Money" }, { src: "s15.webp", cap: "Profile" }, { src: "s16.webp", cap: "Search" }, { src: "s17.webp", cap: "Alerts" }
+      ] }
+    ],
+    note: "An independent concept, not affiliated with any payments company. It uses an original palette and no brand assets."
+  },
+
+  {
     id: "kosh",
     title: "Kosh",
     sub: "Trading platform, web and mobile",
@@ -70,25 +147,6 @@ window.PROJECTS = [
   },
 
   {
-    id: "plotform",
-    title: "Plotform",
-    sub: "Website for a house-planning brand",
-    kind: "Live", cat: "Web app", year: "2026",
-    bg: "#F3F0E9", tone: "light", accent: "#8A6A3B",
-    cover: "cover.webp", tile: "tile.mp4", size: "",
-    summary: "One scroll turns a hand sketch into a finished home.",
-    intro: "Plotform designs layout plans, 3D elevations and furnished interiors for Indian homes. Its website tells that story in a single scroll: a hand sketch becomes a measured plan, then a 3D plan, then furnished rooms, a tilted perspective and finally the lit elevation.",
-    facts: [["Type", "Website"], ["Status", "Live"], ["Pages", "Home, designs, guides, brief form"], ["Year", "2026"]],
-    links: [{ label: "Visit plotform.design", url: "https://plotform.design" }],
-    blocks: [
-      { t: "video", src: "scroll.mp4", poster: "scroll.webp", cap: "The home page, scrolled from top to bottom. The house is drawn live in the browser.", frame: "browser" },
-      { t: "list", h: "Six stages, one scroll", p: "Each stage answers one question a homeowner has, in the order they usually ask it:", items: ["Sketch: does it fit how we live?", "Floor plan: are the rooms the right size?", "3D plan: how does it feel at full height?", "Interiors: where does the furniture go?", "Perspective: how does it sit on the plot?", "Elevation: what will the street see?"] },
-      { t: "img", src: "designs.webp", alt: "Plotform designs page", cap: "Designs page: five concept homes from five regions", frame: "browser", fit: "wide" },
-      { t: "text", h: "Built to be found", p: ["Alongside the main pages there are plain-language guides for the searches people actually make, such as 30×40 plans, east-facing plans and Vastu layouts. A short brief form sends requirements straight to the team's inbox."] }
-    ]
-  },
-
-  {
     id: "loanlens",
     title: "LoanLens",
     sub: "Loan calculator for India",
@@ -112,42 +170,6 @@ window.PROJECTS = [
       { t: "phones", h: "On the phone", items: [{ src: "m-home.webp", cap: "Home" }, { src: "m-new.webp", cap: "New loan" }] },
       { t: "text", h: "Checked, not guessed", p: ["Calculations were checked against an independent reference on hundreds of randomly generated loans, plus scripted tests for typing, sliders, saving and exporting."] }
     ]
-  },
-
-  {
-    id: "upi",
-    title: "UPI Home",
-    sub: "Payments app redesign",
-    kind: "Concept", cat: "Interface", year: "2026",
-    bg: "#0F5A44", tone: "dark", accent: "#9FE3C2",
-    cover: "cover.webp", size: "tall",
-    summary: "Putting the four things people do every day back on top.",
-    intro: "Home screens of popular UPI apps bury the few things people do daily (scan and pay, pay a contact, check balance, pay bills) under offers and cross-sell tiles. This concept strips the home back to those actions and walks through every key flow, across 17 screens.",
-    facts: [["Type", "UX concept"], ["Platform", "Mobile"], ["Screens", "17"], ["Year", "2026"]],
-    blocks: [
-      { t: "phones", h: "The core flows", items: [
-        { src: "s01.webp", cap: "Home" }, { src: "s02.webp", cap: "Scan & pay" }, { src: "s03.webp", cap: "Pay" }, { src: "s04.webp", cap: "Check balance" }, { src: "s09.webp", cap: "Bills & recharge" }
-      ] },
-      { t: "text", h: "The problem",
-        p: ["UPI handled 23.2 billion payments in May 2026, and two apps carry about four in five of them (NPCI data, via Inc42). For most people these apps are now as routine as a wallet, yet their home screens have grown into marketplaces for loans, insurance, rewards and shopping.",
-            "India's consumer regulator (CCPA) has listed disguised ads and interface interference among the dark patterns apps should avoid. This concept asks what a payments home looks like when it is built around the few things people open it for."] },
-      { t: "compare", h: "What's different from today's apps",
-        p: "Compared with the home screens of the most-used UPI apps in India:",
-        left: "Typical UPI app today", right: "This concept",
-        rows: [
-          ["The home screen opens on offers, rewards and loan or insurance banners. The four daily actions compete with a dozen other tiles.", "Scan, pay a contact, pay a UPI ID and transfer to your own account sit together at the top. Everything else is one level down."],
-          ["Checking balance is a separate trip: leave what you were doing, open another screen, enter the PIN.", "Balance is one tap from home and also shown inside the payment flow, so you know before you pay."],
-          ["Scratch cards and ads appear on balance and payment-success screens, right when you want to confirm the money moved.", "No ads on balance or confirmation screens. One clearly labelled sponsored slot on home, and nowhere else."],
-          ["Scanner controls sit near the top of the screen, out of thumb reach, and a QR code on a far wall is hard to read.", "Torch and zoom (1×, 2×, 4×) sit just under the scan frame, within reach of one thumb."],
-          ["Bills are filed by category, so you hunt for the one that is due.", "Bills and recharges are sorted by due date, so what is due soon is on top."]
-        ] },
-      { t: "phones", h: "Every other screen", items: [
-        { src: "s05.webp", cap: "To own account" }, { src: "s06.webp", cap: "UPI ID or number" }, { src: "s07.webp", cap: "Pay a contact" }, { src: "s08.webp", cap: "My QR" },
-        { src: "s10.webp", cap: "Electricity bill" }, { src: "s11.webp", cap: "Mobile recharge" }, { src: "s12.webp", cap: "Find your biller" }, { src: "s13.webp", cap: "History" },
-        { src: "s14.webp", cap: "Money" }, { src: "s15.webp", cap: "Profile" }, { src: "s16.webp", cap: "Search" }, { src: "s17.webp", cap: "Alerts" }
-      ] }
-    ],
-    note: "An independent concept, not affiliated with any payments company. It uses an original palette and no brand assets."
   },
 
   {
@@ -178,7 +200,7 @@ window.PROJECTS = [
     sub: "Apparel artwork for a lifting-equipment brand",
     kind: "Open brief", cat: "Brand", year: "2026",
     bg: "#1C1D21", tone: "dark", accent: "#ED1C26",
-    cover: "cover.webp", size: "wide",
+    cover: "cover.webp", size: "",
     summary: "Wrong attachment. Right catch.",
     intro: "A response to an open brief from MCT Equipment for a long-sleeve performance fishing shirt for their crew. Their tyre-handler machine grips a marlin instead of a tyre, under the line \"Wrong attachment. Right catch.\" The artwork follows MCT's own guidelines for colour, type and logo use.",
     facts: [["Type", "Apparel & illustration"], ["Includes", "Front, back & sleeves, print template, 3D mock-up"], ["Files", "Print-ready vector"], ["Year", "2026"]],
@@ -192,28 +214,6 @@ window.PROJECTS = [
       ] }
     ],
     note: "MCT Equipment's name and logo belong to their owner. Shown here as a response to an open design brief."
-  },
-
-  {
-    id: "singalong",
-    title: "Sing Along",
-    sub: "Lyrics prompter web app",
-    kind: "Live", cat: "Web app", year: "2026",
-    bg: "#E9874E", tone: "dark", accent: "#FFE6C7",
-    cover: "cover.webp", tile: "tile.mp4", size: "tall",
-    summary: "Karaoke-style lyrics that keep time with any music you play.",
-    intro: "Sing Along is a lyrics prompter. It does not play music: people play a song on Spotify, YouTube or any speaker, and Sing Along shows the words line by line, in time. Small details make it useful for practice, like a \"Music\" cue during long intros and a button to replay the previous line.",
-    facts: [["Type", "Web app"], ["Status", "Live"], ["Works on", "Phone & laptop browsers"], ["Year", "2026"]],
-    links: [{ label: "Open Sing Along", url: "https://harshadvaha.github.io/Sing-Along/" }, { label: "Source on GitHub", url: "https://github.com/harshadvaha/Sing-Along" }],
-    blocks: [
-      { t: "video", src: "demo.mp4", poster: "demo.webp", cap: "The built-in demo tape, at real speed. The current line glows; the next one waits below.", frame: "browser" },
-      { t: "text", h: "Why it doesn't play music", p: ["Music apps already do that well. Sing Along only does the part they don't: big, readable lines in sync, a clear cue for when the vocals start, and quick rewind for the line you missed."] },
-      { t: "grid", cols: 2, frame: "browser", items: [
-        { src: "idle.webp", alt: "Sing Along start screen", cap: "Search for a song, or try the demo" },
-        { src: "night.webp", alt: "Sing Along night mode", cap: "Night mode" }
-      ] },
-      { t: "phones", h: "On the phone", items: [{ src: "m-idle.webp", cap: "Start" }, { src: "m-lyrics.webp", cap: "Singing" }] }
-    ]
   },
 
   {
@@ -269,7 +269,7 @@ window.PROJECTS = [
 
 /* Design groundwork: completed LinkedIn Learning courses, shown near the end of /after-hours/ */
 window.DESIGN_LEARNING = {
-  intro: "The design side started with a UX course track in 2021.",
+  intro: "The design side started with a UX course track: research, personas, prototyping and Figma.",
   items: [
     { title: "UX Design series, 7 courses", note: "Overview, user data, personas, ideation, scenarios & storyboards, paper prototyping, implementation planning", year: "2021" },
     { title: "UX Foundations: Prototyping", year: "2021" },
