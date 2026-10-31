@@ -46,6 +46,29 @@ window.PROJECTS = [
   },
 
   {
+    id: "soundspace",
+    title: "SoundSpace",
+    sub: "3D scroll story for a headphone brand",
+    kind: "Concept", cat: "Brand", year: "2026",
+    bg: "#E6E9E3", tone: "light", accent: "#4F6B43",
+    cover: "cover.webp", size: "",
+    summary: "A headphone that takes itself apart, and back together, as you scroll.",
+    intro: "SoundSpace is a fictional headphone brand. Its product page is one continuous 3D story: the Aether over-ear tears down into its parts, rebuilds, goes onto a head, and is then joined by the Drift true-wireless bud and the Tether wired in-ear. The finish can be switched between Graphite, Glacier and Sage at any point, even mid-transition.",
+    facts: [["Type", "Website concept"], ["Products", "Over-ear · True wireless · Wired"], ["Built with", "Three.js · WebGL"], ["Year", "2026"]],
+    links: [{ label: "Source on GitHub", url: "https://github.com/harshadvaha/soundspace-concept" }],
+    blocks: [
+      { t: "text", h: "Show the product, don't describe it", p: ["Headphone pages usually lean on static renders and spec tables. Here the scroll itself does the explaining: what is inside, how it sits on a head, and how the range fits together, in that order."] },
+      { t: "img", src: "teardown.webp", alt: "Over-ear headphone exploded into its layers", cap: "Teardown: eight layers per cup, laid out in the order sound travels", frame: "browser", fit: "wide" },
+      { t: "grid", cols: 2, frame: "browser", items: [
+        { src: "worn.webp", alt: "Headphone worn on a point-cloud head", cap: "Worn: the headphone settles onto a head" },
+        { src: "glacier.webp", alt: "Headphone in the Glacier finish", cap: "The same teardown in the Glacier finish" }
+      ] },
+      { t: "img", src: "lineup.webp", alt: "Over-ear, true-wireless and wired products side by side", cap: "The lineup: over-ear, true wireless and wired", frame: "browser", fit: "wide" }
+    ],
+    note: "SoundSpace is a fictional brand created for this portfolio. 3D product models and head scan are used under CC BY licences, credited on the page."
+  },
+
+  {
     id: "singalong",
     title: "Sing Along",
     sub: "Lyrics prompter web app",
