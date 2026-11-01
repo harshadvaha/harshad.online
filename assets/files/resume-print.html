@@ -17,6 +17,7 @@ header{display:flex;justify-content:space-between;align-items:flex-start;border-
 h1{font-family:YS;font-weight:400;font-size:25pt;line-height:1}
 .head{font-size:9.4pt;font-weight:500;margin-top:2mm}.head i{color:var(--acc);font-style:normal}
 .contact{text-align:right;font-family:MM;font-size:7.2pt;line-height:1.6}
+.contact a{color:inherit}
 .contact .mono{color:var(--ink2);font-size:6.6pt}
 h2{font-size:6.8pt;color:var(--acc);border-bottom:1px solid var(--line);padding-bottom:1mm;margin:3mm 0 1.3mm}
 .facts{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin-top:2.6mm}
@@ -36,13 +37,13 @@ const bold=s=>e(s).replace(/(~?\d+\+?%?)(?=[\s,.;])/g,(m)=>/%|\+/.test(m)?`<b>${
 const [h1,h2]=R.headline.split(' · ');
 document.body.insertAdjacentHTML('beforeend',`
 <header><div><h1>${e(R.name)}</h1><div class="head">${e(h1)} <i>·</i> ${e(h2)}</div></div>
-<div class="contact"><div class="mono">${e(R.location)}</div><div>${e(R.email)}</div><div>${e(R.phone)}</div><div>linkedin.com/in/harshadvaha</div><div>harshad.online</div></div></header>
+<div class="contact"><div class="mono">${e(R.location)}</div><div><a href="mailto:${e(R.email)}">${e(R.email)}</a></div><div><a href="tel:${R.phone.replace(/\s/g,'')}">${e(R.phone)}</a></div><div><a href="${e(R.linkedin)}">linkedin.com/in/harshadvaha</a></div><div><a href="https://harshad.online">harshad.online</a></div></div></header>
 <h2 class="mono">Profile</h2><p>${e(R.summary)}</p>
 <div class="facts">${R.facts.map(f=>`<div><b>${e(f.value)}</b><span>${e(f.label)}</span></div>`).join('')}</div>
 <h2 class="mono">Experience</h2>
 ${R.experience.map(j=>`<div class="row"><div class="k">${e(j.company)}<small>${e(j.start)} – ${e(j.end)}</small></div><div><h3>${e(j.role)}</h3><ul>${j.bullets.map(b=>`<li>${bold(b)}</li>`).join('')}</ul></div></div>`).join('')}
 <h2 class="mono">Personal project</h2>
-<div class="row"><div class="k plain">Pricing case study</div><div><h3 style="font-size:10pt;display:inline">Revenue Leak Audit</h3> <a>· harshad.online/work/revenue-leak-audit</a><div>Pricing leak analysis of 2 years of public e-commerce orders, with a dashboard. Python, Looker Studio, AI.</div></div></div>
+<div class="row"><div class="k plain">Pricing case study</div><div><h3 style="font-size:10pt;display:inline">Revenue Leak Audit</h3> <a href="https://harshad.online/work/revenue-leak-audit/">· harshad.online/work/revenue-leak-audit</a><div>Pricing leak analysis of 2 years of public e-commerce orders, with a dashboard. Python, Looker Studio, AI.</div></div></div>
 <h2 class="mono">Skills</h2>
 ${R.skills.map(s=>`<div class="row" style="margin-top:1.2mm"><div class="k">${e(s.group)}</div><div>${s.items.map(e).join(' · ')}</div></div>`).join('')}
 <h2 class="mono">Education</h2>
