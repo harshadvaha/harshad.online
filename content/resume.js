@@ -2,7 +2,7 @@
    RESUME CONTENT — the "9 to 5" side (/work/)
    Edit text here only. Layout lives in /work/index.html + /assets/css/work.css.
    Rules kept on purpose:
-   - No phone number or email anywhere on the site. LinkedIn is the only contact.
+   - Contact: LinkedIn, email and phone (set below).
    - The file-generation result is written as "~80%" and appears only in the
      Experience section (not in the summary).
    ========================================================================== */
@@ -11,6 +11,8 @@ window.RESUME = {
   headline: "Revenue Growth Management · Pricing & Promotion Analytics",
   location: "Gujarat, India · Remote",
   linkedin: "https://www.linkedin.com/in/harshadvaha",
+  email: "harshad.vaha@gmail.com",
+  phone: "+91 98248 87721",
   pdf: "../assets/files/Harshad-Vaghasiya-Resume.pdf",
 
   // Opening statement (large type). Keep it to one or two sentences.
@@ -23,7 +25,7 @@ window.RESUME = {
   facts: [
     { value: "4+", label: "years in RGM at NielsenIQ" },
     { value: "7+", label: "years of total experience" },
-    { value: "30+", label: "pricing & promotion projects" },
+    { value: "45+", label: "pricing & promotion projects" },
     { value: "3", label: "regions: Asia, Middle East, Eastern Europe" }
   ],
 
@@ -46,9 +48,9 @@ window.RESUME = {
       start: "Mar 2022", end: "Apr 2025",
       bullets: [
         "Supported 30+ pricing and promotion projects across Asia and the Middle East, delivering store-, channel- and category-level insights through Power BI dashboards and NIQ Revenue Management Optimization tools built on statistical regression models.",
-        "Built cross-client benchmark dashboards from historical pricing, promotion, channel and sales data to identify sales uplift and promotional effectiveness opportunities.",
-        "Automated and optimized key recurring processes, cutting execution time by up to 40%.",
-        "Reached platform proficiency 30% faster than benchmark, enabling earlier deployment on client analytics projects."
+        "Built, at leadership's request, a Power BI benchmark dashboard from historical pricing, promotion and elasticity data, giving sales teams country, category and brand-level numbers before client pitches; recognised by leadership.",
+        "Partnered with the product team to test a new modelling platform feature, validating calculations and UI before it went live.",
+        "Automated key recurring processes, cutting execution time by up to 40%, and reached platform proficiency 30% faster than benchmark."
       ]
     },
     {

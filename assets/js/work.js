@@ -19,6 +19,8 @@
   // ---- Links ----
   ['li-top', 'li-cta'].forEach(id => $(id).href = R.linkedin);
   ['pdf-top', 'pdf-cta'].forEach(id => $(id).href = R.pdf);
+  $('mail-cta').href = 'mailto:' + R.email; $('mail-txt').textContent = R.email;
+  $('tel-cta').href = 'tel:' + R.phone.replace(/\s/g, ''); $('tel-txt').textContent = R.phone;
 
   // ---- Facts (numbers count up when they enter the screen) ----
   $('facts').innerHTML = R.facts.map((f, i) => {
